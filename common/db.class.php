@@ -1,14 +1,14 @@
 <?php
 /**
- * DB封装类
+ * DB Class
  * 
  * 通过静态方法调用，实现了主从库分离，从全局变量中获取数据库配置信息
  * 
- * @author Ma Jingbin
+ * @author Tempslar
  */
 Class Common_DB {
 	/**
-	 * 数据库服务器地址
+	 * db server host name
 	 * 
 	 * @var string
 	 */
@@ -16,7 +16,7 @@ Class Common_DB {
 	
 	
 	/**
-	 * 数据库服务器端口
+	 * db server port number
 	 * 
 	 * @var int
 	 */
@@ -24,7 +24,7 @@ Class Common_DB {
 
 	
 	/**
-	 * 数据库服务器用户名
+	 * db user
 	 * 
 	 * @var string
 	 */
@@ -32,14 +32,39 @@ Class Common_DB {
 
 	
 	/**
-	 * 服务器密码
+	 * db password
+	 * 
 	 * @var string
 	 */
 	static protected $_pwd    = '';
 
-	
+
 	/**
-	 * DB 链接静态资源
+	 * DB name
+	 * 
+	 * @var string
+	 */
+	static protected $_dbName  = NULL;
+
+
+	/**
+	 * default encode
+	 * 
+	 * @var string
+	 */
+	static protected $_encode   = 'utf8';
+
+
+	/**
+	 * Default DB group name
+	 * 
+	 * @var string
+	 */
+	static protected $_dbGroup = 'default';
+
+
+	/**
+	 * DB static resource
 	 * 
 	 * @var array
 	 */
@@ -47,26 +72,10 @@ Class Common_DB {
 									'master' => NULL,
 									'slave'  => NULL,
 						 		);
-	
-	
-	/**
-	 * DB库名
-	 * 
-	 * @var string
-	 */
-	static protected $_dbName  = NULL;
 
-	
-	/**
-	 * 默认编码
-	 * 
-	 * @var string
-	 */
-	static protected $_encode   = 'utf8';
 
-	
 	/**
-	 * 日志记录
+	 * log content
 	 * 
 	 * @var string
 	 */
@@ -74,7 +83,7 @@ Class Common_DB {
 
 	
 	/**
-	 * 单例构造方法 - 私有方法
+	 * private __construct for Singleton
 	 */
 	private function __construct() {}
 
@@ -92,26 +101,24 @@ Class Common_DB {
 
 	
 	/**
-	 * 单例入口
+	 * Singleton
 	 * 
 	 * 可获取主库和从库SQL链接
 	 * 
 	 * @param string $dbType - 主从库属性，默认使用主库
-	 * @param string $dbName - 数据库名
-	 * @param string $encode - 编码，默认使用UTF8
 	 * @return resource - 数据库链接实例
 	 */
-	static public function GetDB( $dbType='master', $dbName=DB_PRIMARY, $encode='utf8' ) {
+	static public function GetDB( $dbType='master' ) {
 		//获取DB配置
-		if ( isset( $GLOBALS['g_conf']['db'][ PROJECT_NAME ][ $dbType ] ) ) {
-			$dbConfigs = $GLOBALS['g_conf']['db'][ PROJECT_NAME ][ $dbType ];
+		if ( isset( $GLOBALS['g_conf']['db'][ self::$_dbGroup ][ $dbType ] ) ) {
+			$dbConfigs = $GLOBALS['g_conf']['db'][ self::$_dbGroup ][ $dbType ];
 		}
 		else {
 			$dbConfigs = $GLOBALS['g_conf']['db']['default'][ $dbType ];
 		}
 
-		//输出FIREPHP信息
-		Common_Utility_Debug::getInstance()->showTimeLog( '4-5-1  CONNECT TO DB' );
+		//FIREPHP OUTPUT
+		Common_Utility_Debug::getInstance()->showTimeLog( 'GetDB() CONNECT TO DB' );
 		
 		//链接数据库
 		if ( NULL == self::$_db[ $dbType ] ) {
@@ -119,25 +126,27 @@ Class Common_DB {
 											$dbConfigs['port'],	$dbConfigs['user'],
 											$dbConfigs['pwd'] );
 			
-			//输出FIREPHP信息
-			Common_Utility_Debug::getInstance()->showTimeLog( '4-5-2-1 CONNECT DB' );
+			//FIREPHP OUTPUT
+			Common_Utility_Debug::getInstance()->showTimeLog( 'GetDB() CONNECT DB' );
 		}
 		else {	//如果链接存在,则验证链接
 			self::$_db[ $dbType ] = self::ping( self::$_db[ $dbType ] );
 			
-			//输出FIREPHP信息
-			Common_Utility_Debug::getInstance()->showTimeLog( '4-5-2-2 USE STATIC HANDLE' );
+			//FIREPHP OUTPUT
+			Common_Utility_Debug::getInstance()->showTimeLog( 'GetDB() USE STATIC HANDLE' );
 		}
 
-		//输出FIREPHP信息
-		Common_Utility_Debug::getInstance()->showTimeLog( '4-5-2 CONNECT OK' );
+		//FIREPHP OUTPUT
+		Common_Utility_Debug::getInstance()->showTimeLog( 'GetDB() CONNECT OK' );
+		
+		$dbName =  !empty( self::$_dbName )  ?  self::$_dbName : $dbConfigs['db'];
 		
 		if ( $dbName ) {	//切换数据库
 			$res = mysql_select_db( $dbName, self::$_db[ $dbType ] );
 		}
 		
-		//输出FIREPHP信息
-		Common_Utility_Debug::getInstance()->showTimeLog( '4-5-3 SELECT DB ' . $dbName . ' ->' . (bool) $res );
+		//FIREPHP OUTPUT
+		Common_Utility_Debug::getInstance()->showTimeLog( 'GetDB() SELECT DB ' . $dbName . ' ->' . (bool) $res );
 		Common_Utility_Debug::getInstance()->info( self::$_db, 'DB TYPE' );
 	
 		return self::$_db[ $dbType ];
@@ -150,11 +159,12 @@ Class Common_DB {
 	 * @param array $configs
 	 */
 	static public function setDbConfig( $configs ) {
-		self::$_host = $configs['host'];
-		self::$_port = $configs['port'];
-		self::$_user = $configs['user'];
-		self::$_pwd  = $configs['pwd'];
-		self::$_db   = $configs['db'];
+		self::$_host   = ( $configs['host'] )   ? : NULL;
+		self::$_port   = ( $configs['port'] )   ? : NULL;
+		self::$_user   = ( $configs['user'] )   ? : NULL;
+		self::$_pwd    = ( $configs['pwd'] )    ? : '';
+		self::$_dbName = ( $configs['db']  )    ? : NULL;
+		self::$_encode = ( $configs['encode'] ) ? : 'utf8';
 	}
 	
 
@@ -221,16 +231,16 @@ Class Common_DB {
 		$sqlLimit = mysql_escape_string( $limit );
 
 		$sqlColumn = self::getColumn( $columns );
-		//输出FIREPHP信息
+		//FIREPHP OUTPUT
 		Common_Utility_Debug::getInstance()->showTimeLog( '4-2' );
 		
 		$params    = self::mysqlString( $params );
-		//输出FIREPHP信息
+		//FIREPHP OUTPUT
 		Common_Utility_Debug::getInstance()->showTimeLog( '4-3' );
 		
 		//获取sql where 部分
 		$sqlWhere = self::getSqlWhere( $params );
-		//输出FIREPHP信息
+		//FIREPHP OUTPUT
 		Common_Utility_Debug::getInstance()->showTimeLog( '4-4' );
 		
 		//生成SQL语句
@@ -250,27 +260,27 @@ Class Common_DB {
 
 		//优先使用从库
 		$db = self::GetDB( 'slave' );
-		//输出FIREPHP信息
+		//FIREPHP OUTPUT
 		Common_Utility_Debug::getInstance()->showTimeLog( '4-5' );
 		
-		//输出FIREPHP信息
+		//FIREPHP OUTPUT
 		Common_Utility_Debug::getInstance()->info( $sql, 'Sql' );
 		//记录SQL日志
 		Common_Utility_Log::MysqlLog( $sql );
 		
 		$sqlRes = mysql_query( $sql, $db );
 		
-		//输出FIREPHP信息
+		//FIREPHP OUTPUT
 		Common_Utility_Debug::getInstance()->log( $sqlRes, 'Sql Res' );
 		
 		if ( false == $sqlRes ) {
-			//输出FIREPHP信息
+			//FIREPHP OUTPUT
 			Common_Utility_Debug::getInstance()->log( mysql_error(), 'Sql Error' );
 		}
 		
 		$sqlDatas = self::outputSqlData( $sqlRes );
 		
-		//输出FIREPHP信息
+		//FIREPHP OUTPUT
 		Common_Utility_Debug::getInstance()->log( $sqlDatas, 'Sql Data' );
 		
 		return $sqlDatas;
@@ -314,12 +324,12 @@ Class Common_DB {
 				
 			$db  = self::GetDB();
 
-			//输出FIREPHP信息
+			//FIREPHP OUTPUT
 			Common_Utility_Debug::getInstance()->info( $sql, 'Sql' );
 			
 			$sqlRes = mysql_query( $sql, $db );
 			
-			//输出FIREPHP信息
+			//FIREPHP OUTPUT
 			Common_Utility_Debug::getInstance()->info( $sqlRes, 'Sql Res' );
 			
 			if ( !$sqlRes ) {
@@ -372,7 +382,7 @@ Class Common_DB {
 				
 			$sqlRes = mysql_query( $sql, $db );
 			
-			//输出FIREPHP信息
+			//FIREPHP OUTPUT
 			Common_Utility_Debug::getInstance()->info( $sql, 'Sql' );
 			Common_Utility_Debug::getInstance()->info( $sqlRes, 'Sql Res' );
 			Common_Utility_Debug::getInstance()->info( mysql_error(), 'Sql Error' );
@@ -407,18 +417,18 @@ Class Common_DB {
 	
 			$db = self::GetDB();
 
-			//输出FIREPHP信息
+			//FIREPHP OUTPUT
 			Common_Utility_Debug::getInstance()->info( $sql, 'Sql' );
 			
 			$sqlRes = mysql_query( $sql, $db );
 			
-			//输出FIREPHP信息
+			//FIREPHP OUTPUT
 			Common_Utility_Debug::getInstance()->info( $sqlRes, 'Sql Res' );
 			
 			if ( !$sqlRes ) {
 				self::SaveLog( 'SQL->'.$sql."\nERROR->".mysql_error() );
 				
-				//输出FIREPHP信息
+				//FIREPHP OUTPUT
 				Common_Utility_Debug::getInstance()->info( mysql_error(), 'Sql Error' );
 				
 				return FALSE;
@@ -475,12 +485,12 @@ Class Common_DB {
 		
 		$db = self::GetDB();
 		
-		//输出FIREPHP信息
+		//FIREPHP OUTPUT
 		Common_Utility_Debug::getInstance()->info( $sql, 'Sql' );
 		
 		$sqlRes = mysql_query( $sql, $db );
 		
-		//输出FIREPHP信息
+		//FIREPHP OUTPUT
 		Common_Utility_Debug::getInstance()->log( strval( $sqlRes ), 'Sql Res' );
 		
 		return $sqlRes;
@@ -512,7 +522,7 @@ Class Common_DB {
 				
 			$sqlRes = mysql_query( $sql );
 			
-			//输出FIREPHP信息
+			//FIREPHP OUTPUT
 			Common_Utility_Debug::getInstance()->info( $sql, 'Sql' );
 			Common_Utility_Debug::getInstance()->log( strval( $sqlRes ), 'Sql Res' );
 			
@@ -526,7 +536,7 @@ Class Common_DB {
 				$output = $sqlRes;
 			}
 				
-			//输出FIREPHP信息
+			//FIREPHP OUTPUT
 			Common_Utility_Debug::getInstance()->log( $output, 'Sql Data' );
 			
 			return $output;
@@ -547,7 +557,7 @@ Class Common_DB {
 		$db     = self::GetDB();
 		
 		$id     = mysql_insert_id();
-		//输出FIREPHP信息
+		//FIREPHP OUTPUT
 		Common_Utility_Debug::getInstance()->info( $id, 'SQL INSERT ID' );
 		
 		if ( $id ) {
