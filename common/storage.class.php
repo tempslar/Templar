@@ -4,7 +4,7 @@
  * 
  * 封装基本存储操作
  * 
- * @author jingbin
+ * @author tempslar
  */
 Class Common_Storage {
 	
@@ -13,7 +13,7 @@ Class Common_Storage {
 	 * 
 	 * @var string
 	 */
-	protected $_dbName = NULL;
+	protected $_dbName = DB_PRIMARY;
 	
 	
 	/**
@@ -31,6 +31,16 @@ Class Common_Storage {
 	 */
 	protected $_model  = NULL;
 	
+	
+	/**
+     	 * DB Group name
+     	 *
+     	 * Select different DB Server through this
+     	 *
+	 * @var string
+     	 */
+    	protected $_dbGroup  = 'default';
+    
 	
 	/**
 	 * 计数值
@@ -52,6 +62,11 @@ Class Common_Storage {
 		if ( !is_null( $model )  &&  is_object( $model ) ) {
 			$this->setModel( $model );
 		}
+		
+		//set db name
+                if ( $this->_dbName ) {
+                        Common_DB::setDbConfig( [ "db" => $this->_dbName ] );
+                }
 		
 		return $this;
 	}
