@@ -2,7 +2,7 @@
 /**
  * DB Class
  * 
- * 通过静态方法调用，实现了主从库分离，从全局变量中获取数据库配置信息
+ * Singleton DB Class, support multiple database and multiple DB groups
  * 
  * @author Tempslar
  */
@@ -81,7 +81,7 @@ Class Common_DB {
 	 */
 	static protected $_log = NULL;
 
-	
+
 	/**
 	 * private __construct for Singleton
 	 */
@@ -89,27 +89,27 @@ Class Common_DB {
 
 
 	/**
-	 * 单例析构方法 - 私有方法
+	 * private __destruct for Singleton
 	 */
 	private function __destruct() {}
 
 	
 	/**
-	 * 单例克隆方法  - 私有方法
+	 * private __clone for Singleton
 	 */
 	private function __clone() {}
 
 	
 	/**
-	 * Singleton
+	 * Singleton get DB instance method
 	 * 
-	 * 可获取主库和从库SQL链接
+	 * get DB connection
 	 * 
-	 * @param string $dbType - 主从库属性，默认使用主库
-	 * @return resource - 数据库链接实例
+	 * @param string $dbType - Connect to Master Server/Slave Server
+	 * @return resource - mysql db connection resource
 	 */
 	static public function GetDB( $dbType='master' ) {
-		//获取DB配置
+		//Get DB Configure Array from init.php
 		if ( isset( $GLOBALS['g_conf']['db'][ self::$_dbGroup ][ $dbType ] ) ) {
 			$dbConfigs = $GLOBALS['g_conf']['db'][ self::$_dbGroup ][ $dbType ];
 		}
@@ -120,7 +120,7 @@ Class Common_DB {
 		//FIREPHP OUTPUT
 		Common_Utility_Debug::getInstance()->showTimeLog( 'GetDB() CONNECT TO DB' );
 		
-		//链接数据库
+		//Connect to DB
 		if ( NULL == self::$_db[ $dbType ] ) {
 			self::$_db[ $dbType ] = self::connect( $dbConfigs['host'],
 											$dbConfigs['port'],	$dbConfigs['user'],
@@ -129,7 +129,7 @@ Class Common_DB {
 			//FIREPHP OUTPUT
 			Common_Utility_Debug::getInstance()->showTimeLog( 'GetDB() CONNECT DB' );
 		}
-		else {	//如果链接存在,则验证链接
+		else {	//ping static DB connection, and reconnect to DB, if conncect is closed
 			self::$_db[ $dbType ] = self::ping( self::$_db[ $dbType ] );
 			
 			//FIREPHP OUTPUT
@@ -141,7 +141,7 @@ Class Common_DB {
 		
 		$dbName =  !empty( self::$_dbName )  ?  self::$_dbName : $dbConfigs['db'];
 		
-		if ( $dbName ) {	//切换数据库
+		if ( $dbName ) {	//switch Database
 			$res = mysql_select_db( $dbName, self::$_db[ $dbType ] );
 		}
 		
@@ -151,31 +151,31 @@ Class Common_DB {
 	
 		return self::$_db[ $dbType ];
 	}
-	
-	
+
+
 	/**
-	 * 设置数据库配置信息
+	 * Set a group of DB config to static properties
 	 * 
 	 * @param array $configs
 	 */
 	static public function setDbConfig( $configs ) {
-		self::$_host   = ( $configs['host'] )   ? : NULL;
-		self::$_port   = ( $configs['port'] )   ? : NULL;
-		self::$_user   = ( $configs['user'] )   ? : NULL;
-		self::$_pwd    = ( $configs['pwd'] )    ? : '';
-		self::$_dbName = ( $configs['db']  )    ? : NULL;
-		self::$_encode = ( $configs['encode'] ) ? : 'utf8';
+		self::$_host   = isset( $configs['host'] )   ?  $configs['host'] : NULL;
+		self::$_port   = isset( $configs['port'] )   ?  $configs['port'] : NULL;
+		self::$_user   = isset( $configs['user'] )   ?  $configs['user'] : NULL;
+		self::$_pwd    = isset( $configs['pwd'] )    ?  $configs['pwd'] : '';
+		self::$_dbName = isset( $configs['db']  )    ?  $configs['db'] : NULL;
+		self::$_encode = isset( $configs['encode'] ) ?  $configs['encode'] : 'utf8';
 	}
-	
+
 
 	/**
-	 * 数据库链接方法
+	 * DB Connect Method
 	 * 
 	 * @param string $host
 	 * @param int $port
 	 * @param string $user
 	 * @param string $pwd
-	 * @return resource/NULL - 数据库链接
+	 * @return resource/NULL - db connection resource
 	 */
 	static protected function connect( $host='', $port='', $user='', $pwd='' ) {
 		if ( !$host  ||  !$port  ||  !$user ) {
@@ -195,7 +195,7 @@ Class Common_DB {
 
 
 	/**
-	 * Ping方法
+	 * Ping Method
 	 * 
 	 * 验证数据库链接是否通畅,如果链接断开则重连一次
 	 * 
@@ -260,8 +260,6 @@ Class Common_DB {
 
 		//优先使用从库
 		$db = self::GetDB( 'slave' );
-		//FIREPHP OUTPUT
-		Common_Utility_Debug::getInstance()->showTimeLog( '4-5' );
 		
 		//FIREPHP OUTPUT
 		Common_Utility_Debug::getInstance()->info( $sql, 'Sql' );
@@ -313,7 +311,7 @@ Class Common_DB {
 			$sqlColumn = '';
 			$sqlValue  = '';
 			$params    = self::mysqlString( $params );
-				
+
 			$columns   = array_keys( $params );
 			$values    = array_values( $params );
 				
@@ -348,7 +346,7 @@ Class Common_DB {
 
 
 	/**
-	 * Update数据
+	 * Update Method
 	 *  
 	 * @param string $table
 	 * @param array $params
@@ -395,7 +393,7 @@ Class Common_DB {
 
 
 	/**
-	 * REPLACE数据
+	 * REPLACE Method
 	 *
 	 * @param string $table
 	 * @param array $params
@@ -442,7 +440,7 @@ Class Common_DB {
 	
 	
 	/**
-	 * DELETE操作
+	 * DELETE Method
 	 * 
 	 * 不能清空整个表,必须提供$params参数
 	 * 
@@ -498,9 +496,9 @@ Class Common_DB {
 	
 	
 	/**
-	 * 直接执行SQL QUERY
+	 * SQL QUERY sent to DB directly
 	 * 
-	 * 注意做mysql注入过滤
+	 * Attention MySQL Injection!
 	 * 
 	 * @param string $sql
 	 * @return resource|NULL
@@ -553,7 +551,7 @@ Class Common_DB {
 	static public function MysqlInsertId() {
 		$output = NULL;
 		
-		//获取数据库链接
+		//get db instance
 		$db     = self::GetDB();
 		
 		$id     = mysql_insert_id();
@@ -569,7 +567,7 @@ Class Common_DB {
 
 
 	/**
-	 * 生成SELECT中选取的字段串
+	 * Generate Where String for SELECT
 	 * 
 	 * @param array $columns
 	 * @return string
@@ -805,7 +803,7 @@ Class Common_DB {
 	
 	
 	/**
-	 * 启动事务处理
+	 * Start Transaction
 	 *
 	 */
 	static public function StartTransaction() {
@@ -818,7 +816,7 @@ Class Common_DB {
 	
 	
 	/**
-	 * 提交事务处理
+	 * Transaction Commit
 	 */
 	static public function Commit() {
 		$db = self::GetDB();
@@ -830,7 +828,7 @@ Class Common_DB {
 	
 	
 	/**
-	 * 事务回滚数据库
+	 * Transaction Rollback
 	 */
 	static public function Rollback() {
 		$db = self::GetDB();
@@ -842,7 +840,7 @@ Class Common_DB {
 	
 	
 	/**
-	 * 事务终止
+	 * Transaction End
 	 *
 	 * @return resource
 	 */
@@ -856,7 +854,7 @@ Class Common_DB {
 	
 	
 	/**
-	 * 记录Sql Log
+	 * SQL Log set to static property
 	 * 
 	 * @param string $message
 	 */
@@ -866,7 +864,7 @@ Class Common_DB {
 
 	
 	/**
-	 * 获取log
+	 * Get Log Method
 	 * 
 	 * @return string
 	 */
