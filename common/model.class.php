@@ -137,7 +137,8 @@ Class Common_Model {
 	 */
 	public function __set( $key, $value='' ) {
 		if ( !empty( $key )  &&  array_key_exists( $key, $this->_params )  
-				&&  !is_null($value)  && ( '0' === $value  ||  !empty( $value ) ) ) {
+				&&  !is_null($value)
+				&& ( '0' === $value  ||  0 === $value  ||  !empty( $value ) ) ) {
 
 			$value = trim( $value, ' ,' );
 	    	$value = htmlspecialchars( $value );
