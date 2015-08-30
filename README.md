@@ -38,28 +38,47 @@ Templar Framework provides 7 Layers to achieve low Coupling and help developer s
 FileStructure
 ======
 Templar
+
 |-common   - Framework libraries
+
 |-utility  - Common utilities
+
 |-plugins  - Proxy classes and third-party libraries
+
 |-resource - resource files like bootstrap and jquery can be accessed by all applications
+
 |-prog     - Application Directives
+
 	|-example
+	
 		|-model
+		
 		|-core
+		
 		|-app
+		
 		|-data
+		
 		|-storage 
+		
 		|-view
+		
 		|-templates
 
 Layers
 ======
 Model     - Data Model
+
 Core      - Controller
+
 App       - Logic
+
 Data      - Data flow control
+
 Storage   - DB 
+
 View      - Output
+
 Templates - Smarty Templates
 
 
