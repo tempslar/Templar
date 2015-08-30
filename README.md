@@ -124,5 +124,5 @@ FirePHP
 
 Plugins
 ======
-How to add a third-party library as a plugin.
+Create a proxy class to use a third-party library as a plugin.
 
