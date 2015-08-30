@@ -25,4 +25,27 @@ Featrues
 More than MVC!
 Templar Framework provides 7 Layers to achieve low Coupling and help developer spread their code into different layers.
 
+File Structure
+=======
+
+
+Layers
+=======
+
+
+Database
+=======
+
+
+Cache and No-SQL
+=======
+
+
+Debug
+=======
+
+
+Plugins
+=======
+
 
