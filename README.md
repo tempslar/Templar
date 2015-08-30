@@ -5,13 +5,20 @@ A Flexing Light PHP Framework with Redis, Memcache, and MySQL, on Linux and Apac
 
 Table of contents
 =======
-[Features](https://github.com/tempslar/Templar#featrues)
+[Features](#featrues)
+
 File Structure
+
 Layers
+
 Database
+
 Cache and No-SQL
+
 Debug
+
 Plugins
+
 
 Featrues
 =======
