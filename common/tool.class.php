@@ -31,21 +31,22 @@ Class Common_Tool {
 	 */
 	static public function GetModel( $name='', $subName='' ) {
 		
-		if ( defined( 'SYS_ENTRANCE' )  &&  defined( 'SYS_LEVEL' ) ) {
+		if ( defined('PROG_DIR') && defined( 'SYS_ENTRANCE' )  &&  defined( 'SYS_LEVEL' ) ) {
 		//Model正常按层级处理流程
-			
-			$modelName    = 'Model_';
-			
-			$modelName    .= SYS_ENTRANCE;
-			
+		
+			//2015-02-25 modified by tempslar - change dir structure
+			$modelName    = PROG_DIR . DEFAULT_SEPARATOR
+					. SYS_ENTRANCE . DEFAULT_SEPARATOR
+					. 'Model' . DEFAULT_SEPARATOR . SYS_ENTRANCE;
+
 			$defaultModel = $modelName;
 			
 			if ( 2 == SYS_LEVEL ) {
-				$modelName .= '_' . $name;
+				$modelName .= DEFAULT_SEPARATOR . $name;
 			}
 			
 			if ( 3 == SYS_LEVEL ) {
-				$modelName .= '_' . $subName;
+				$modelName .= DEFAULT_SEPARATOR . $subName;
 			}
 			
 			if ( class_exists( $modelName, true ) ) {	//生成制定model
@@ -82,6 +83,10 @@ Class Common_Tool {
 			$method = '';
 			
 			//解析model名相关参数，拆分act为多部分
+			if ( !isset( $_REQUEST['act'] ) ) {
+				self::DefaultAct();
+			}
+				
 			if ( isset( $_REQUEST['act'] ) ) {
 				
 				if ( strpos( $_REQUEST['act'], REQUEST_SEPARATER ) ) {
@@ -92,7 +97,7 @@ Class Common_Tool {
 				
 			}
 			//FIREPHP输出
-			Common_Utility_Debug::getInstance()->log( $act . DEFAULT_SPERATOR . $method, 'ACT_METHOD' );
+			Common_Utility_Debug::getInstance()->log( $act . DEFAULT_SEPARATOR . $method, 'ACT_METHOD' );
 			
 			//获取MODEL
 			$model = self::GetModel( $act, $method );
@@ -100,10 +105,11 @@ Class Common_Tool {
 			Common_Utility_Debug::getInstance()->showTimeLog( '2-2' );
 			
 			foreach ( $_REQUEST  as  $key => $value ) {
-				//赋值给model
-				if ( 'act' != $key ) {
+				
+				if ( 'act' != $key ) {	//赋值给model
 					$model->$key = $value;
 				}
+				
 			}
 			
 			//写入act和method参数
@@ -125,13 +131,17 @@ Class Common_Tool {
 	static public function GetAppClassName( $act ) {
 		$className = '';
 		$nameArr   = array();
-		
-		if ( defined( 'APP_ROOT_NAME' ) ) {
-			$nameArr[] = APP_ROOT_NAME;
-		}
-		
+	
+		if ( defined( 'PROG_DIR' ) ) {
+			$nameArr[] = PROG_DIR;
+		}	
+
 		if ( defined( 'SYS_ENTRANCE' ) ) {
 			$nameArr[] = SYS_ENTRANCE;
+		}
+
+		if ( defined( 'APP_ROOT_NAME' ) ) {
+			$nameArr[] = APP_ROOT_NAME;
 		}
 		
 		if ( !empty( $act ) ) {
@@ -247,8 +257,8 @@ Class Common_Tool {
 	 * 
 	 * 返回不同格式
 	 * 
-	 * @param unknown_type $type
-	 * @param unknown_type $time
+	 * @param string $type
+	 * @param int $time
 	 */
 	static public function NowDate( $type='all', $time='' ) {
 		$format = 'Y-m-d H:i:s';
@@ -391,8 +401,8 @@ Class Common_Tool {
 	 * @return boolean
 	 */
 	static public function WriteFile( $file='', $content='', $type=WRITE_MODE ) {
-	
-		if ( $file  &&  $content ) {
+		
+		if ( $file  &&  $content  &&  is_writable( $file ) ) {
 			//写入日志文件
 			$fp          = fopen( $file, $type );
 			$writeResult = fwrite( $fp, $content . "\n" );

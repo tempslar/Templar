@@ -4,7 +4,7 @@
  * 
  * @author Jingbin Ma
  */
-Class Utility_Api_Userclass {
+Class Prog_Api_Utility_Api_Example {
 	
 	/**
 	 * 设置课程开始学习时间

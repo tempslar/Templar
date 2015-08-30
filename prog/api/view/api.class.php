@@ -1,17 +1,18 @@
 <?php
 /**
- * API项目VIEW类
+ * View class for api
  * 
- * 将数据输出为JSON
+ * convert data to JSON
  * 
- * @author Jingbin Ma <majingbin@ata.net.cn>
+ * @author tempslar
  *
  */
-Class View_Api {
+Class Prog_Api_View_Api {
+	
 	/**
+	 * template file path
 	 * 
-	 * 
-	 * @var unknown_type
+	 * @var string
 	 */
 	private $_tplPath = '';
 	
@@ -23,12 +24,12 @@ Class View_Api {
 	
 
 	/**
-	 * 输出类
+	 * Output method
 	 * 
-	 * 将数据输出为JSON
+	 * Convert data into JSON
 	 * 
 	 * @param array $datas
-	 * @return string - json字符串
+	 * @return string - json string
 	 */
 	public function show( $datas='' ) {
 		
@@ -40,8 +41,8 @@ Class View_Api {
 			Common_Tool::messageExit( '0' );
 		}
 		
-		//调用json处理方法
+		//call json utlity method
 		Common_Utility_Json::jsonOut( $datas );
 	}
-	
+
 }

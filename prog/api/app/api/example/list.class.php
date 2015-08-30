@@ -1,5 +1,5 @@
 <?php
-Class App_Api_Example_List {
+Class Prog_Api_App_Api_Example_List {
 	static public $_model   = NULL;
 	
 	static public $_view    = NULL;

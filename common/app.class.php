@@ -57,7 +57,7 @@ Class Common_App {
 			
 			//获取MC KEY
 			if ( is_array( $cacheParams ) ) {
-				$key = implode( MC_KEY_SPERATOR, $cacheParams );
+				$key = implode( MC_KEY_SEPARATOR, $cacheParams );
 			}
 			
 		}

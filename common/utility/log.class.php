@@ -51,7 +51,7 @@ Class Common_Utility_Log {
 		$file            = LOG_PATH . self::$_FileName;
 		
 		$log    = str_replace( "\n", ' ', $log );
-		$logStr = date('YmdHis') . SQL_LOG_SPERATOR . $log;
+		$logStr = date('YmdHis') . SQL_LOG_SEPARATOR . $log;
 		
 		return Common_Tool::WriteFile( $file, $logStr );
 	}
@@ -77,7 +77,7 @@ Class Common_Utility_Log {
 			//拼接日志数据
 			foreach ( $datas  AS  $key => $value ) {
 				
-				$logData .= LOG_SPERATOR . $key . LOG_SPERATOR . $value;
+				$logData .= LOG_SEPARATOR . $key . LOG_SEPARATOR . $value;
 				
 			}
 			
@@ -85,7 +85,7 @@ Class Common_Utility_Log {
 		
 		//添加前缀
 		if ( $logData ) {
-			$logData = date('YmdHis') . LOG_SPERATOR . $logData;
+			$logData = date('YmdHis') . LOG_SEPARATOR . $logData;
 		}
 		
 		//写入日志文件
@@ -110,7 +110,7 @@ Class Common_Utility_Log {
 		self::$_FileName = date( 'YmdH' ) . '.log';
 		
 		if ( $prefix ) {
-			self::$_FileName = $prefix . DEFAULT_SPERATOR . self::$_FileName;
+			self::$_FileName = $prefix . DEFAULT_SEPARATOR . self::$_FileName;
 		}
 		
 		return self::$_FileName;
@@ -151,11 +151,11 @@ Class Common_Utility_Log {
 				$logParts = array();
 				
 				foreach ( $tempLogDatas  AS  $key => $value ) {
-					$logParts[] = $key . LOG_SPERATOR . $value;
+					$logParts[] = $key . LOG_SEPARATOR . $value;
 				}
 				
-				$logData = implode( LOG_SPERATOR, $logParts );
-				$logData = 'datetime' . LOG_SPERATOR . $datetime . LOG_SPERATOR . $logData;
+				$logData = implode( LOG_SEPARATOR, $logParts );
+				$logData = 'datetime' . LOG_SEPARATOR . $datetime . LOG_SEPARATOR . $logData;
 			}
 			
 			$logData .= "\n";

@@ -1,5 +1,5 @@
 <?php
-Class View_Api_Userclass extends Common_View {
+Class Prog_Api_View_Api_Example extends Common_View {
 
 	private $_tplPath = '';
 

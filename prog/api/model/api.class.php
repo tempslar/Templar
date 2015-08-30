@@ -1,5 +1,5 @@
 <?php
-Class Model_Api extends Common_Model {
+Class Prog_Api_Model_Api extends Common_Model {
 	
 	/**
 	 * 获取参数

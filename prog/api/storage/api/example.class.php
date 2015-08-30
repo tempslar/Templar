@@ -1,5 +1,5 @@
 <?php
-Class Storage_Api_Userclass extends Common_Storage {
+Class Prog_Api_Storage_Api_Userclass extends Common_Storage {
 	
 	protected $_table = 'user_class';
 	

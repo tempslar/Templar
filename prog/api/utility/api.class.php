@@ -1,5 +1,5 @@
 <?php
-Class Utility_Api {
+Class Prog_Api_Utility_Api {
 
         /**
          * 返回api接口权限类型
@@ -8,13 +8,13 @@ Class Utility_Api {
 
                 if ( $apiName ) {
                         //任何人都可访问
-                        if ( isset( Config_Api::$_everyoneApis )  &&  is_array( Config_Api::$_everyoneApis )  &&  in_array( $apiName, Config_Api::$_everyoneApis ) ) {
+                        if ( isset( Prog_Api_Config_Api::$_everyoneApis )  &&  is_array( Prog_Api_Config_Api::$_everyoneApis )  &&  in_array( $apiName, Prog_Api_Config_Api::$_everyoneApis ) ) {
 
                                 return 1;
                         }
 
                         //内网访问
-                        if ( isset( Config_Api::$_interApis )  &&  is_array( Config_Api::$_interApis )  &&  in_array( $apiName, Config_Api::$_interApis ) ) {
+                        if ( isset( Prog_Api_Config_Api::$_interApis )  &&  is_array( Prog_Api_Config_Api::$_interApis )  &&  in_array( $apiName, Prog_Api_Config_Api::$_interApis ) ) {
 
                                 return 2;
                         }

@@ -1,5 +1,5 @@
 <?php
-Class Data_Api_Example extends Common_Data {
+Class Prog_Api_Data_Api_Example extends Common_Data {
 	static protected $_model = NULL;
 	
 	static public $_results = NULL;
@@ -159,8 +159,8 @@ Class Data_Api_Example extends Common_Data {
 		}
 		
 		//拆分多cid字符串
-		if ( false !== strpos( $cidStr, PARAM_SPERATOR ) ) {
-			$cids = explode( PARAM_SPERATOR, $cidStr );
+		if ( false !== strpos( $cidStr, PARAMDEFAULT_SEPARATOR ) ) {
+			$cids = explode( PARAMDEFAULT_SEPARATOR, $cidStr );
 		}
 		else {
 			$cids = array( $cidStr );

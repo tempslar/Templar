@@ -1,8 +1,8 @@
 <?php
-include_once 'init.php';
+include_once './../../init.php';
 
 if ( 'do' == $_REQUEST['debug'] ) {
-	//Common_Tool::DebugModeOn();
+	Common_Tool::DebugModeOn();
 }
 
 Common_Utility_Debug::getInstance()->showTimeLog( 1 );
@@ -13,12 +13,13 @@ define( 'SYS_LEVEL', 2 );
 Common_Utility_Debug::getInstance()->showTimeLog( 2 );
 
 $model = Common_Tool::GetRequest();
+
 Common_Utility_Debug::getInstance()->showTimeLog( 3 );
 
 $api_name = $model->act . '_' . $model->method;
 
 //check apiname privilage type
-$api_priv_type = Utility_Api::GetApiPrivType( $api_name );
+$api_priv_type = Prog_Api_Utility_Api::GetApiPrivType( $api_name );
 
 //判断访问权限
 switch ( $api_priv_type ) {

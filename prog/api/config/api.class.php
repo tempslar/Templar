@@ -1,5 +1,5 @@
 <?php
-Class Config_Api {
+Class Prog_Api_Config_Api {
 	
 	/**
 	 * 

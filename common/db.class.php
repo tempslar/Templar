@@ -758,9 +758,9 @@ Class Common_DB {
 		else {
 			$order = strtoupper( $order );
 			
-			if ( false !== strpos( $order, PARAM_SPERATOR ) ) {
+			if ( false !== strpos( $order, PARAMDEFAULT_SEPARATOR ) ) {
 			//处理多排序方式
-				$tmpOrders = explode( PARAM_SPERATOR, $order );
+				$tmpOrders = explode( PARAMDEFAULT_SEPARATOR, $order );
 			}
 			
 		}
@@ -769,7 +769,7 @@ Class Common_DB {
 		//组合ORDER BY字段
 		if ( !empty( $col ) ) {
 			//分解$col
-			$columnArr = explode( PARAM_SPERATOR, $col );
+			$columnArr = explode( PARAMDEFAULT_SEPARATOR, $col );
 			$i = 0;
 			
 			//获取各项字段值
