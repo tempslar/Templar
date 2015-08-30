@@ -85,7 +85,9 @@ Templates - Smarty Templates
 Database
 ======
 MySQLi
+
 SQL Query
+
 Master/Slave Database
 
 
