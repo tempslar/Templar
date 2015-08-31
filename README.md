@@ -1,13 +1,13 @@
-Templar
+Templar Framework
 =======
 
-A Flexing Light PHP Framework with Redis, Memcache, and MySQL, on Linux and Apache/NginX Web Server
+A Flexing Light PHP Framework with Redis, Memcached, and MySQL, on Linux and Apache/NginX Web Server
 
 Table of contents
 =======
 [Features](#featrues)
 
-[FileStructure](#filestructure)
+[File Structure](#file-structure)
 
 [Layers](#layers)
 
@@ -25,45 +25,48 @@ Table of contents
 
 [Plugins](#plugins)
 
+[Lift Off](#lift-off)
+
 
 Featrues
 ======
 More than MVC!
 
-Templar Framework provides 7 Layers to achieve low Coupling and help developer spread their code into different layers.
+Templar Framework provides 7 Layers to achieve low coupling and help developer spread their code into different layers.
 
 
 
 
-FileStructure
+File Structure
 ======
+
 Templar
 
-|-common   - Framework libraries
-
-|-utility  - Common utilities
-
-|-plugins  - Proxy classes and third-party libraries
-
-|-resource - resource files like bootstrap and jquery can be accessed by all applications
-
-|-prog     - Application Directives
-
-	|-example
+	|-common   - Framework libraries
 	
-		|-model
+	|-utility  - Common utilities
+	
+	|-plugins  - Proxy classes and third-party libraries
+	
+	|-resource - resource files like bootstrap and jquery which you want to be accessed by all applications
+	
+	|-prog     - Application Directories (working directories)
+	
+		|-example
 		
-		|-core
-		
-		|-app
-		
-		|-data
-		
-		|-storage 
-		
-		|-view
-		
-		|-templates
+			|-model
+			
+			|-core
+			
+			|-app
+			
+			|-data
+			
+			|-storage 
+			
+			|-view
+			
+			|-templates
 
 Layers
 ======
@@ -147,3 +150,10 @@ Plugins
 ======
 Create a proxy class to use a third-party library as a plugin.
 
+
+Lift Off
+======
+Depoly the Templar source code into your web service directories (etc, /www/htdocs/demo).
+
+
+Create your project in prog directory like demo (/www/htdocs/demo/prog/demo)
