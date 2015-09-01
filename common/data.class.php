@@ -2,9 +2,9 @@
 Class Common_Data {
 	const MODEL_NAME = '';
 	
-	//static public $_counter  = NULL;
+	//public static $_counter  = NULL;
 	
-	static protected $_model = NULL;
+	protected static $_model = NULL;
 	
 	
 	/**
@@ -12,7 +12,7 @@ Class Common_Data {
 	 * 
 	 * @param unknown_type $model
 	 */
-	static public function GetModel( $model ) {
+	public static function GetModel( $model ) {
 		if ( $model ) {
 			self::$_model = $model;
 				
@@ -29,7 +29,7 @@ Class Common_Data {
 	 * @param string $modelName - model类名称
 	 * @return object
 	 */
-	static protected function newModel() {
+	protected static function newModel() {
 		//获取调用该方法的子类名称
 		$callClass = get_called_class();
 		

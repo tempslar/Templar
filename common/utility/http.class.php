@@ -24,7 +24,7 @@ Class Common_Utility_Http {
 	 * @param unknown_type $timeout
 	 * @param unknown_type $params
 	 */
-	static public function HttpGetContent( $url, $method='get', $connectTime=self::CONNECT_TRY_TIME, $timeout=CONNECT_ALIVE_TIME, $params=array() ) {
+	public static function HttpGetContent( $url, $method='get', $connectTime=self::CONNECT_TRY_TIME, $timeout=CONNECT_ALIVE_TIME, $params=[] ) {
 		/*
 		$data = file_get_contents( $url );
 		
@@ -46,7 +46,7 @@ Class Common_Utility_Http {
 	 * @param unknown_type $method
 	 * @param unknown_type $params
 	 */
-	static public function Curl( $url, $method='get', $postParams=array() ) {
+	public static function Curl( $url, $method='get', $postParams=[] ) {
 		$curl = curl_init(  );
 		curl_setopt( $curl, CURLOPT_URL, $url );//请求地址
 		curl_setopt( $curl, CURLOPT_HEADER, 0 );
@@ -73,7 +73,7 @@ Class Common_Utility_Http {
 	
 	
 	
-	static public function Socket() {
+	public static function Socket() {
 		
 	}
 	

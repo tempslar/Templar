@@ -1,12 +1,12 @@
 <?php
 Class Common_Cache {
 	
-	private $_cacheServers = array();
+	private $_cacheServers = [];
 	
 	private $_cacheTime    = 600;
 	
 	
-	static private $_cacheLinker = NULL;
+	private static $_cacheLinker = NULL;
 	
 	
 	public function __construct() {

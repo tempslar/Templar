@@ -12,8 +12,8 @@ Class Common_Utility_Img {
 	 * @param string $url
 	 * @return mixed array|null - 图片数组
 	 */
-	static public function GetClassImgArrary( $url='' ) {
-		$outImgs = array();
+	public static function GetClassImgArrary( $url='' ) {
+		$outImgs = [];
 		
 		if ( $url ) {
 			$outImgs['thumb_big']   = self::GetClassReSizeImg( $url );
@@ -35,7 +35,7 @@ Class Common_Utility_Img {
 	 * @param int $type - 转换图片类型,1-大图,2-小图
 	 * @return mixed string | null
 	 */
-	static public function GetClassReSizeImg( $url='', $type=1 ) {
+	public static function GetClassReSizeImg( $url='', $type=1 ) {
 		
 		if ( $url ) {
 			$orgMark = '/avatar_origin/';

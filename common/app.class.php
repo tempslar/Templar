@@ -2,18 +2,18 @@
 Class Common_App {
 	
 	/*
-	static private $_model   = NULL;
+	private static $_model   = NULL;
 	
 	
-	static private $_storage = NULL;
+	private static $_storage = NULL;
 	
 	
-	static private $_view    = NULL;
+	private static $_view    = NULL;
 	*/
 	
 	
 	/*
-	static public function Run( $model='', $storage='', $view='' ) {
+	public static function Run( $model='', $storage='', $view='' ) {
 		
 	}
 	*/
@@ -26,7 +26,7 @@ Class Common_App {
 	 * @param array $cacheKeyNames - 需要出现在KEY中的字段
 	 * @return mixed string|null
 	 */
-	static public function GetCacheKey( $model='', $cacheKeyNames='', $needAct = TRUE ) {
+	public static function GetCacheKey( $model='', $cacheKeyNames='', $needAct = TRUE ) {
 		$key         = NULL;
 		$cacheParams = NULL;
 		

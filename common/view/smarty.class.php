@@ -2,7 +2,7 @@
 Class Common_View_Smarty {
 	static public $_smarty  = NULL;
 	
-	protected $_tplRoot     = ROOT_PATH;
+	protected $_tplRoot     = NULL;
 	
 	protected $_tplDir      = 'templates/';
 	
@@ -19,13 +19,13 @@ Class Common_View_Smarty {
 	protected $_model = NULL;
 	
 	
-	public function __construct( $model=NULL ) {
+	public function __construct( $model = null ) {
 		
-		include_once 'Smarty.class.php';
-		
-		self::$_smarty = new Smarty();
+		self::$_smarty = Plugins_Smarty_Smarty::GetInst();
 
 		if ( is_object( self::$_smarty ) ) {	//设置SMARTY参数
+			//setting templates dir
+			$this->_tplRoot = defined('TPL_PATH') ? ROOT_PATH . TPL_PATH : ROOT_PATH;
 			
 			self::$_smarty->template_dir    = $this->_tplRoot . $this->_tplDir;
 			self::$_smarty->compile_dir     = $this->_tplRoot . $this->_compileDir;
@@ -34,7 +34,8 @@ Class Common_View_Smarty {
 			self::$_smarty->left_delimiter  = $this->_lDelimiter;
 			self::$_smarty->right_delimiter = $this->_rDelimiter;
 			
-			if ( 'do' == $_REQUEST['debug'] ) {
+			if ( isset( $_REQUEST[ DEBUG_KEY ] )
+					&&  DEBUG_KEY == $_REQUEST[ DEBUG_KEY ] ) {
 				self::$_smarty->debugging = TRUE;
 			}
 		

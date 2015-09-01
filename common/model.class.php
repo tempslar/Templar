@@ -122,7 +122,7 @@ Class Common_Model {
 	/**
 	 * 静态方法
 	 */
-	static public function GetInst() {
+	public static function GetInst() {
 		return new self();
 	}
 	

@@ -1,6 +1,6 @@
 <?php
 Class Common_Scheme {
-	protected $_params = array();
+	protected $_params = [];
 	
 	
 	public function __set() {

@@ -1,13 +1,13 @@
 <?php
 Class Common_Utility_Debug {
 	
-	static protected $_firePhpObj = NULL;
+	protected static $_firePhpObj = NULL;
 	
 	
-	static protected $_fireStatus = NULL;
+	protected static $_fireStatus = NULL;
 	
 	
-	static protected $_fireOptions = array(
+	protected static $_fireOptions = array(
 											'maxObjectDepth'       => 5
 											,'maxArrayDepth'       => 5
 											,'maxDepth'            => 10
@@ -18,7 +18,7 @@ Class Common_Utility_Debug {
 	
 	public function __construct() {
 		
-		if ( TRUE == USE_FIREPHP  &&  isset( $_REQUEST['debug'] )  &&  'do' == $_REQUEST['debug'] ) {
+		if ( TRUE == USE_FIREPHP  &&  isset( $_REQUEST[ DEBUG_KEY ] )  &&  DEBUG_VALUE == $_REQUEST[ DEBUG_KEY ] ) {
 			$firePhpPath = ROOT_PATH . 'include/firephp/FirePHP.class.php';
 			
 			if ( file_exists( $firePhpPath ) ) {
@@ -46,7 +46,7 @@ Class Common_Utility_Debug {
 	 * 
 	 * @return object - FirePhp instance
 	 */
-	static public function getInstance() {
+	public static function getInstance() {
 		return new self();
 	}
 	
@@ -58,7 +58,7 @@ Class Common_Utility_Debug {
 	 * @param array $params - 要输出的参数
 	 * @return NULL
 	 */
-	public function __call( $methodName, $params=array() ) {
+	public function __call( $methodName, $params=[] ) {
 		if ( !is_null( self::$_firePhpObj ) ) {
 			
 			if ( isset( $GLOBALS['g_vars']['starttime'] ) ) {

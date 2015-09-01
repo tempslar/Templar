@@ -317,7 +317,7 @@ class PHPMailer {
    * If SingleTo is true, this provides the array to hold the email addresses
    * @var bool
    */
-  public $SingleToArray = array();
+  public $SingleToArray = [];
 
   /**
    * Should we allow sending messages with empty body?
@@ -418,37 +418,37 @@ class PHPMailer {
    * @var array An array of 'to' addresses
    * @access protected
    */
-  protected   $to             = array();
+  protected   $to             = [];
   /**
    * @var array An array of 'cc' addresses
    * @access protected
    */
-  protected   $cc             = array();
+  protected   $cc             = [];
   /**
    * @var array An array of 'bcc' addresses
    * @access protected
    */
-  protected   $bcc            = array();
+  protected   $bcc            = [];
   /**
    * @var array An array of reply-to name and address
    * @access protected
    */
-  protected   $ReplyTo        = array();
+  protected   $ReplyTo        = [];
   /**
    * @var array An array of all kinds of addresses: to, cc, bcc, replyto
    * @access protected
    */
-  protected   $all_recipients = array();
+  protected   $all_recipients = [];
   /**
    * @var array An array of attachments
    * @access protected
    */
-  protected   $attachment     = array();
+  protected   $attachment     = [];
   /**
    * @var array An array of custom headers
    * @access protected
    */
-  protected   $CustomHeader   = array();
+  protected   $CustomHeader   = [];
   /**
    * @var string The message's MIME type
    * @access protected
@@ -458,12 +458,12 @@ class PHPMailer {
    * @var array An array of MIME boundary strings
    * @access protected
    */
-  protected   $boundary       = array();
+  protected   $boundary       = [];
   /**
    * @var array An array of available languages
    * @access protected
    */
-  protected   $language       = array();
+  protected   $language       = [];
   /**
    * @var integer The number of errors encountered
    * @access protected
@@ -930,7 +930,7 @@ class PHPMailer {
    * @return bool
    */
   protected function MailSend($header, $body) {
-    $toArr = array();
+    $toArr = [];
     foreach($this->to as $t) {
       $toArr[] = $this->AddrFormat($t);
     }
@@ -980,7 +980,7 @@ class PHPMailer {
    */
   protected function SmtpSend($header, $body) {
     require_once $this->PluginDir . 'class.smtp.php';
-    $bad_rcpt = array();
+    $bad_rcpt = [];
 
     if(!$this->SmtpConnect()) {
       throw new phpmailerException($this->Lang('smtp_connect_failed'), self::STOP_CRITICAL);
@@ -1068,7 +1068,7 @@ class PHPMailer {
     // Retry while there is no connection
     try {
       while($index < count($hosts) && !$connection) {
-        $hostinfo = array();
+        $hostinfo = [];
         if (preg_match('/^(.+):([0-9]+)$/', $hosts[$index], $hostinfo)) {
           $host = $hostinfo[1];
           $port = $hostinfo[2];
@@ -1188,7 +1188,7 @@ class PHPMailer {
    */
   public function AddrAppend($type, $addr) {
     $addr_str = $type . ': ';
-    $addresses = array();
+    $addresses = [];
     foreach ($addr as $a) {
       $addresses[] = $this->AddrFormat($a);
     }
@@ -1408,7 +1408,7 @@ class PHPMailer {
       }
     }
 
-    $from = array();
+    $from = [];
     $from[0][0] = trim($this->From);
     $from[0][1] = $this->FromName;
     $result .= $this->AddrAppend('From', $from);
@@ -1691,7 +1691,7 @@ class PHPMailer {
    * @return void
    */
   protected function SetMessageType() {
-    $this->message_type = array();
+    $this->message_type = [];
     if($this->AlternativeExists()) $this->message_type[] = "alt";
     if($this->InlineImageExists()) $this->message_type[] = "inline";
     if($this->AttachmentExists()) $this->message_type[] = "attach";
@@ -1789,9 +1789,9 @@ class PHPMailer {
    */
   protected function AttachAll($disposition_type, $boundary) {
     // Return text of body
-    $mime = array();
-    $cidUniq = array();
-    $incl = array();
+    $mime = [];
+    $cidUniq = [];
+    $incl = [];
 
     // Add all attachments
     foreach ($this->attachment as $attachment) {
@@ -2255,7 +2255,7 @@ class PHPMailer {
     foreach($this->to as $to) {
       unset($this->all_recipients[strtolower($to[0])]);
     }
-    $this->to = array();
+    $this->to = [];
   }
 
   /**
@@ -2266,7 +2266,7 @@ class PHPMailer {
     foreach($this->cc as $cc) {
       unset($this->all_recipients[strtolower($cc[0])]);
     }
-    $this->cc = array();
+    $this->cc = [];
   }
 
   /**
@@ -2277,7 +2277,7 @@ class PHPMailer {
     foreach($this->bcc as $bcc) {
       unset($this->all_recipients[strtolower($bcc[0])]);
     }
-    $this->bcc = array();
+    $this->bcc = [];
   }
 
   /**
@@ -2285,7 +2285,7 @@ class PHPMailer {
    * @return void
    */
   public function ClearReplyTos() {
-    $this->ReplyTo = array();
+    $this->ReplyTo = [];
   }
 
   /**
@@ -2294,10 +2294,10 @@ class PHPMailer {
    * @return void
    */
   public function ClearAllRecipients() {
-    $this->to = array();
-    $this->cc = array();
-    $this->bcc = array();
-    $this->all_recipients = array();
+    $this->to = [];
+    $this->cc = [];
+    $this->bcc = [];
+    $this->all_recipients = [];
   }
 
   /**
@@ -2306,7 +2306,7 @@ class PHPMailer {
    * @return void
    */
   public function ClearAttachments() {
-    $this->attachment = array();
+    $this->attachment = [];
   }
 
   /**
@@ -2314,7 +2314,7 @@ class PHPMailer {
    * @return void
    */
   public function ClearCustomHeaders() {
-    $this->CustomHeader = array();
+    $this->CustomHeader = [];
   }
 
   /////////////////////////////////////////////////

@@ -47,7 +47,7 @@ Class Common_Storage {
 	 * 
 	 * @var int
 	 */
-	static private $_totalCount = NULL;
+	private static $_totalCount = NULL;
 	
 	
 	/**
@@ -78,7 +78,7 @@ Class Common_Storage {
 	 * @param object $model - model对象
 	 * @return object - Common_Storage
 	 */
-	static public function GetInst( $model=NULL ) {
+	public static function GetInst( $model=NULL ) {
 		return new self( $model );
 	}
 	
@@ -128,7 +128,7 @@ Class Common_Storage {
 	 * @param boolean $countWithFilterLists - COUNT语句是否同时使用参数过滤列表
 	 * @return object - $model
 	 */
-	public function getData( $filterLists=array(), $withCount=TRUE, $countWithFilterLists=TRUE ) {
+	public function getData( $filterLists=[], $withCount=TRUE, $countWithFilterLists=TRUE ) {
 		$table = $this->getTable();
 		
 		if ( $this->_model->pg > 1 ) {
@@ -222,7 +222,7 @@ Class Common_Storage {
 	/**
 	 * 统计数据方法
 	 */
-	public function getDataCount( $filterLists=array() ) {
+	public function getDataCount( $filterLists=[] ) {
 		$table  = $this->getTable();
 		
 		$params = $this->_model->getSqlParamArr();
@@ -266,7 +266,7 @@ Class Common_Storage {
 	 * 
 	 * @param array $filterLists - 手动需要过滤的参数
 	 */
-	public function addData( $filterLists=array() ) {
+	public function addData( $filterLists=[] ) {
 		$table = $this->getTable();
 		
 		$params = $this->_model->getSqlParamArr();
@@ -289,12 +289,12 @@ Class Common_Storage {
 	 * @param array $whereCols   - 作为查询条件的字段
 	 * @return boolean
 	 */
-	public function updateData( $filterLists=array(), $whereCols=array() ) {
+	public function updateData( $filterLists=[], $whereCols=[] ) {
 		$table = $this->getTable();
 		
 		$tempParams = $this->_model->getSqlParamArr();
-		$params = array();
-		$wheres = array();
+		$params = [];
+		$wheres = [];
 		
 		//分割
 		if ( is_array( $whereCols )  &&  is_array( $tempParams ) ) {
@@ -328,7 +328,7 @@ Class Common_Storage {
 	/**
 	 * 删除数据方法
 	 */
-	public function delData( $filterLists=array() ) {
+	public function delData( $filterLists=[] ) {
 		$table  = $this->getTable();
 	
 		$params = $this->_model->getSqlParamArr();
@@ -358,7 +358,7 @@ Class Common_Storage {
 	/**
 	 * 覆盖数据方法
 	 */
-	public function replaceData(  $filterLists=array()  ) {
+	public function replaceData(  $filterLists=[]  ) {
 		$table = $this->getTable();
 	
 		$params = $this->_model->getSqlParamArr();

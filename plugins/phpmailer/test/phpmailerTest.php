@@ -39,14 +39,14 @@ class phpmailerTest extends PHPUnit_Framework_TestCase
      * @private
      * @var string[]
      */
-    public $ChangeLog = array();
+    public $ChangeLog = [];
 
     /**
      * Holds the note log.
      * @private
      * @var string[]
      */
-    public $NoteLog = array();
+    public $NoteLog = [];
 
     /**
      * @var string Default include path
@@ -118,8 +118,8 @@ class phpmailerTest extends PHPUnit_Framework_TestCase
     {
         // Clean global variables
         $this->Mail = null;
-        $this->ChangeLog = array();
-        $this->NoteLog = array();
+        $this->ChangeLog = [];
+        $this->NoteLog = [];
     }
 
 
@@ -581,13 +581,13 @@ class phpmailerTest extends PHPUnit_Framework_TestCase
             'first.last@[IPv6::a2:a3:a4:b1:b2:b3:b4]',
             'first.last@[IPv6:a1:a2:a3:a4::b1:b2:b3:b4]'
         );
-        $goodfails = array();
+        $goodfails = [];
         foreach ($validaddresses as $address) {
             if (!PHPMailer::ValidateAddress($address)) {
                 $goodfails[] = $address;
             }
         }
-        $badpasses = array();
+        $badpasses = [];
         foreach ($invalidaddresses as $address) {
             if (PHPMailer::ValidateAddress($address)) {
                 $badpasses[] = $address;

@@ -1,7 +1,7 @@
 <?php
 class WapTool {
 	
-	function urlGetContents($url, $con_timeout=1, $read_timeout=3 ,$method="GET", $postdata=array(), $compressed = false, $user = '', $pass = '', $extraHeaders = FALSE)
+	function urlGetContents($url, $con_timeout=1, $read_timeout=3 ,$method="GET", $postdata=[], $compressed = false, $user = '', $pass = '', $extraHeaders = FALSE)
 	{
 		static $http;
 		if (!is_object($http))
@@ -12,7 +12,7 @@ class WapTool {
 		$http->setTimeout($con_timeout, $read_timeout);
 		if ($method == "POST" && $postdata)
 		{
-			$http->setPostData(array());
+			$http->setPostData([]);
 			$http->addPostData($postdata);
 		}
 		//增加验证功能
@@ -38,7 +38,7 @@ class WapTool {
 	{
 		$xml_parser = new XMLDecode();
 		$xml_parser->parse($xml);
-		$result = array();
+		$result = [];
 		if ($element_name)
 		{
 			if ($start !== false && $start >= 0)

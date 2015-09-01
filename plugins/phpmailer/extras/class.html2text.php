@@ -241,7 +241,7 @@ class html2text
      *  @access private
      *  @see _build_link_list()
      */
-    private $_link_list = array();
+    private $_link_list = [];
 
 
     /**
@@ -278,7 +278,7 @@ class html2text
      *  @access public
      *  @return void
      */
-    public function __construct( $source = '', $from_file = false, $options = array() )
+    public function __construct( $source = '', $from_file = false, $options = [] )
     {
         $this->_options = array_merge($this->_options, $options);
 
@@ -394,7 +394,7 @@ class html2text
     private function _convert()
     {
         // Variables used for building the link list
-        $this->_link_list = array();
+        $this->_link_list = [];
 
         $text = trim(stripslashes($this->html));
 

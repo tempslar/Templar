@@ -1,14 +1,14 @@
 <?php
 Class Common_Tool {
 	
-	static public $_model = NULL;
+	public static $_model = NULL;
 	
 	
 	/**
 	 * 开启PHP调试信息
 	 */
-	static public function DebugModeOn() {
-		error_reporting( E_ALL );
+	public static function DebugModeOn( $level = E_ALL) {
+		error_reporting( $level );
 		ini_set( 'display_errors', 1 );
 	}
 	
@@ -16,7 +16,7 @@ Class Common_Tool {
 	/**
 	 * 关闭PHP调试信息
 	 */
-	static public function DebugModeOff() {
+	public static function DebugModeOff() {
 		error_reporting( E_ERROR );
 		ini_set( 'display_errors', 0 );
 	}
@@ -29,7 +29,7 @@ Class Common_Tool {
 	 * @param string $subName - 对应method参数
 	 * @return resource - model 实例
 	 */
-	static public function GetModel( $name='', $subName='' ) {
+	public static function GetModel( $name='', $subName='' ) {
 		
 		if ( defined('PROG_DIR') && defined( 'SYS_ENTRANCE' )  &&  defined( 'SYS_LEVEL' ) ) {
 		//Model正常按层级处理流程
@@ -74,7 +74,7 @@ Class Common_Tool {
 	 * @param array $_REQUEST - 全局参数
 	 * @return resource       - model 实例
 	 */
-	static public function GetRequest() {
+	public static function GetRequest() {
 		
 		$model = NULL;
 		
@@ -89,8 +89,8 @@ Class Common_Tool {
 				
 			if ( isset( $_REQUEST['act'] ) ) {
 				
-				if ( strpos( $_REQUEST['act'], REQUEST_SEPARATER ) ) {
-					$apiNames = explode( REQUEST_SEPARATER, $_REQUEST['act'] );
+				if ( strpos( $_REQUEST['act'], REQUEST_SEPARATOR ) ) {
+					$apiNames = explode( REQUEST_SEPARATOR, $_REQUEST['act'] );
 					$act      = $apiNames[ 0 ];
 					$method   = $apiNames[ 1 ];
 				}
@@ -128,9 +128,9 @@ Class Common_Tool {
 	 * 
 	 * @param string $act
 	 */
-	static public function GetAppClassName( $act ) {
+	public static function GetAppClassName( $act ) {
 		$className = '';
-		$nameArr   = array();
+		$nameArr   = [];
 	
 		if ( defined( 'PROG_DIR' ) ) {
 			$nameArr[] = PROG_DIR;
@@ -149,7 +149,7 @@ Class Common_Tool {
 		}
 		
 		if ( is_array( $nameArr )  &&  !empty( $nameArr ) ) {
-			$className = implode( $nameArr, REQUEST_SEPARATER );
+			$className = implode( $nameArr, REQUEST_SEPARATOR );
 		}
 		
 		return $className;
@@ -161,7 +161,7 @@ Class Common_Tool {
 	 * @param int $uid
 	 * @return string/NULL - token值
 	 */
-	static public function GetToken( $uid ) {
+	public static function GetToken( $uid ) {
 		
 		if ( $uid ) {
 			$md5Uid = md5( $uid );
@@ -190,7 +190,7 @@ Class Common_Tool {
 	 * @param unknown_type $uid
 	 * @param unknown_type $skey
 	 */
-	static public function CheckToken( $uid, $uToken ) {
+	public static function CheckToken( $uid, $uToken ) {
 		if ( $uid  &&  $uToken ) {
 			$rightToken = self::getToken($uid);
 			
@@ -212,7 +212,7 @@ Class Common_Tool {
 	 * @param string $message - 英文信息
 	 * @param string $cnMessage - 中文信息
 	 */
-	static public function messageExit( $status, $message='', $cnMessage='', $type='' ) {
+	public static function messageExit( $status, $message='', $cnMessage='', $type='' ) {
 		//$status值初始化
 		if ( TRUE == $status ) {
 			$status = '1';
@@ -260,7 +260,7 @@ Class Common_Tool {
 	 * @param string $type
 	 * @param int $time
 	 */
-	static public function NowDate( $type='all', $time='' ) {
+	public static function NowDate( $type='all', $time='' ) {
 		$format = 'Y-m-d H:i:s';
 		
 		if ( !$time ) {
@@ -296,7 +296,7 @@ Class Common_Tool {
 	/**
 	 * 全局输出方法
 	 */
-	static public function End() {
+	public static function End() {
 		//输出脚本执行时间
 		if ( isset( $GLOBALS['g_vars']['starttime'] ) ) {
 			$runtime = microtime( TRUE ) - $GLOBALS['g_vars']['starttime'];
@@ -312,7 +312,7 @@ Class Common_Tool {
 	 * 
 	 * @param unknown_type $input
 	 */
-	static public function SmartSerialize( $input ) {
+	public static function SmartSerialize( $input ) {
 		$output = NULL;
 		
 		if ( is_array( $input )  /*||  is_object( $input )*/ ) {
@@ -331,7 +331,7 @@ Class Common_Tool {
 	 * 
 	 * @param string $input
 	 */
-	static public function SmartUnserialize( $input='' ) {
+	public static function SmartUnserialize( $input='' ) {
 		$output = NULL;
 		
 		if ( !empty( $input ) ) {
@@ -355,7 +355,7 @@ Class Common_Tool {
 	 *
 	 * @param string $input
 	 */
-	static public function SmartUrlEncode( $input='' ) {
+	public static function SmartUrlEncode( $input='' ) {
 		$output = NULL;
 	
 		if ( !empty( $input ) ) {
@@ -376,7 +376,7 @@ Class Common_Tool {
 	 *
 	 * @param string $input
 	 */
-	static public function SmartUrlDecode( $input='' ) {
+	public static function SmartUrlDecode( $input='' ) {
 		$output = NULL;
 	
 		if ( !empty( $input ) ) {
@@ -400,7 +400,7 @@ Class Common_Tool {
 	 * @param string $type
 	 * @return boolean
 	 */
-	static public function WriteFile( $file='', $content='', $type=WRITE_MODE ) {
+	public static function WriteFile( $file='', $content='', $type=WRITE_MODE ) {
 		
 		if ( $file  &&  $content  &&  is_writable( $file ) ) {
 			//写入日志文件

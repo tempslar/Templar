@@ -12,7 +12,7 @@ Class Common_DB {
 	 * 
 	 * @var string
 	 */
-	static protected $_host   = NULL;
+	protected static $_host   = NULL;
 	
 	
 	/**
@@ -20,7 +20,7 @@ Class Common_DB {
 	 * 
 	 * @var int
 	 */
-	static protected $_port   = NULL;
+	protected static $_port   = NULL;
 
 	
 	/**
@@ -28,7 +28,7 @@ Class Common_DB {
 	 * 
 	 * @var string
 	 */
-	static protected $_user   = NULL;
+	protected static $_user   = NULL;
 
 	
 	/**
@@ -36,7 +36,7 @@ Class Common_DB {
 	 * 
 	 * @var string
 	 */
-	static protected $_pwd    = '';
+	protected static $_pwd    = '';
 
 
 	/**
@@ -44,7 +44,7 @@ Class Common_DB {
 	 * 
 	 * @var string
 	 */
-	static protected $_dbName  = NULL;
+	protected static $_dbName  = NULL;
 
 
 	/**
@@ -52,7 +52,7 @@ Class Common_DB {
 	 * 
 	 * @var string
 	 */
-	static protected $_encode   = 'utf8';
+	protected static $_encode   = 'utf8';
 
 
 	/**
@@ -60,7 +60,7 @@ Class Common_DB {
 	 * 
 	 * @var string
 	 */
-	static protected $_dbGroup = 'default';
+	protected static $_dbGroup = 'default';
 
 
 	/**
@@ -68,7 +68,7 @@ Class Common_DB {
 	 * 
 	 * @var array
 	 */
-	static protected $_db = array(
+	protected static $_db = array(
 									'master' => NULL,
 									'slave'  => NULL,
 						 		);
@@ -79,7 +79,7 @@ Class Common_DB {
 	 * 
 	 * @var string
 	 */
-	static protected $_log = NULL;
+	protected static $_log = NULL;
 
 
 	/**
@@ -108,7 +108,7 @@ Class Common_DB {
 	 * @param string $dbType - Connect to Master Server/Slave Server
 	 * @return resource - mysql db connection resource
 	 */
-	static public function GetDB( $dbType='master' ) {
+	public static function GetDB( $dbType='master' ) {
 		//Get DB Configure Array from init.php
 		if ( isset( $GLOBALS['g_conf']['db'][ self::$_dbGroup ][ $dbType ] ) ) {
 			$dbConfigs = $GLOBALS['g_conf']['db'][ self::$_dbGroup ][ $dbType ];
@@ -158,7 +158,7 @@ Class Common_DB {
 	 * 
 	 * @param array $configs
 	 */
-	static public function setDbConfig( $configs ) {
+	public static function setDbConfig( $configs ) {
 		self::$_host   = isset( $configs['host'] )   ?  $configs['host'] : NULL;
 		self::$_port   = isset( $configs['port'] )   ?  $configs['port'] : NULL;
 		self::$_user   = isset( $configs['user'] )   ?  $configs['user'] : NULL;
@@ -177,7 +177,7 @@ Class Common_DB {
 	 * @param string $pwd
 	 * @return resource/NULL - db connection resource
 	 */
-	static protected function connect( $host='', $port='', $user='', $pwd='' ) {
+	protected static function connect( $host='', $port='', $user='', $pwd='' ) {
 		if ( !$host  ||  !$port  ||  !$user ) {
 			$host = self::$_host;
 			$port = self::$_port;
@@ -202,7 +202,7 @@ Class Common_DB {
 	 * @param resource $db
 	 * @return resource
 	 */
-	static protected function ping( $db ) {
+	protected static function ping( $db ) {
 		$pingRes = mysql_ping( $db );
 		
 		if ( !$pingRes ) {
@@ -225,7 +225,7 @@ Class Common_DB {
 	 * @param array $columns - 要查询的列，如与COUNT,MAX,MIN必须大写
 	 * @return mixed - array/NULL
 	 */
-	static public function Select( $table, $params=array(), $limit=0, $order='', $columns=array( '*' ) ) {
+	public static function Select( $table, $params=[], $limit=0, $order='', $columns=array( '*' ) ) {
 		$sqlWhere = '';
 		$sqlOrder = $order;
 		$sqlLimit = mysql_escape_string( $limit );
@@ -292,7 +292,7 @@ Class Common_DB {
 	 * @param array $params
 	 * @return mixed - int/NULL
 	 */
-	static public function Count( $table, $params ) {
+	public static function Count( $table, $params ) {
 		$count = self::Select( $table, $params, '', '', array( 'COUNT(*)' ) );
 		
 		return $count;
@@ -305,7 +305,7 @@ Class Common_DB {
 	 * @param string $table
 	 * @param array $params
 	 */
-	static public function Insert( $table, $params ) {
+	public static function Insert( $table, $params ) {
 		
 		if ( $table ) {
 			$sqlColumn = '';
@@ -353,7 +353,7 @@ Class Common_DB {
 	 * @param array $wheres
 	 * @param int $limit
 	 */
-	static public function Update( $table, $params, $wheres, $limit=1 ) {
+	public static function Update( $table, $params, $wheres, $limit=1 ) {
 		
 		if ( $table  &&  $params ) {
 			$sqlWhere = '';
@@ -398,7 +398,7 @@ Class Common_DB {
 	 * @param string $table
 	 * @param array $params
 	 */
-	static public function Replace( $table, $params ) {
+	public static function Replace( $table, $params ) {
 		
 		if ( $table ) {
 			$sqlColumn = '';
@@ -450,7 +450,7 @@ Class Common_DB {
 	 * @param int $limit
 	 * @return boolean
 	 */
-	static public function Delete( $table, $params, $order='', $limit=1 ) {
+	public static function Delete( $table, $params, $order='', $limit=1 ) {
 		$sqlWhere = '';
 		$sqlOrder = $order;
 		$sqlLimit = mysql_escape_string( $limit );
@@ -503,7 +503,7 @@ Class Common_DB {
 	 * @param string $sql
 	 * @return resource|NULL
 	 */
-	static public function Query( $sql ) {
+	public static function Query( $sql ) {
 		
 		if ( $sql ) {
 			$output = NULL;
@@ -548,7 +548,7 @@ Class Common_DB {
 	 * Get the ID generated in the last query
 	 * 
 	 */
-	static public function MysqlInsertId() {
+	public static function MysqlInsertId() {
 		$output = NULL;
 		
 		//get db instance
@@ -572,7 +572,7 @@ Class Common_DB {
 	 * @param array $columns
 	 * @return string
 	 */
-	static protected function getColumn( $columns ) {
+	protected static function getColumn( $columns ) {
 		
 		if ( $columns  &&  is_array( $columns ) ) {
 			$column = '';
@@ -608,7 +608,7 @@ Class Common_DB {
 	 * @param array $params
 	 * @return string
 	 */
-	static public function GetSqlWhere( $params ) {
+	public static function GetSqlWhere( $params ) {
 		
 		if ( $params  &&  is_array( $params ) ) {
 			$sqlWhere = '';
@@ -633,7 +633,7 @@ Class Common_DB {
 	 * @param array $dataArr
 	 * @return string|NULL
 	 */
-	static public function getUpdateSet( $dataArr ) {
+	public static function getUpdateSet( $dataArr ) {
 		
 		if ( $dataArr ) {
 			$setStr = '';
@@ -676,7 +676,7 @@ Class Common_DB {
 	 * @param array $dataArr
 	 * @return array
 	 */
-	static protected function mysqlString( $dataArr ) {
+	protected static function mysqlString( $dataArr ) {
 		
 		if ( $dataArr  &&  is_array( $dataArr ) ) {
 			
@@ -696,10 +696,10 @@ Class Common_DB {
 	 * @param resource $sqlRes
 	 * @return Ambigous <NULL, array>|NULL
 	 */
-	static protected function outputSqlData( $sqlRes=null ) {
+	protected static function outputSqlData( $sqlRes=null ) {
 		
 		if ( $sqlRes ) {
-			$sqlDatas = array();
+			$sqlDatas = [];
 				
 			while ( $datas = mysql_fetch_array( $sqlRes, MYSQL_ASSOC) ) {
 				$sqlDatas[] = $datas;
@@ -719,7 +719,7 @@ Class Common_DB {
 	 * @param array $dataArr
 	 * @return array|null
 	 */
-	static public function outputDataArray( $dataArr ) {
+	public static function outputDataArray( $dataArr ) {
 		
 		if ( $dataArr  &&  is_array( $dataArr ) ) {
 			
@@ -744,12 +744,12 @@ Class Common_DB {
 	 * @param string $order - 排序规则 ASC/DESC,默认为DESC
 	 * @return mixed - string/NULL
 	 */
-	static public function GetOrderStr( $col, $order='' ) {
+	public static function GetOrderStr( $col, $order='' ) {
 		$col   = mysql_escape_string( $col );
 		$order = mysql_escape_string( $order );
 		
 		$orderStr  = NULL;
-		$orderArr  = array();
+		$orderArr  = [];
 		$tmpOrders = NULL;
 		
 		if ( empty( $order ) ) {	//获取默认排序方式
@@ -806,7 +806,7 @@ Class Common_DB {
 	 * Start Transaction
 	 *
 	 */
-	static public function StartTransaction() {
+	public static function StartTransaction() {
 		$db = self::GetDB();
 	
 		$sqlResult = mysql_query( 'START TRANSACTION' );
@@ -818,7 +818,7 @@ Class Common_DB {
 	/**
 	 * Transaction Commit
 	 */
-	static public function Commit() {
+	public static function Commit() {
 		$db = self::GetDB();
 	
 		$sqlResult = mysql_query( 'COMMIT' );
@@ -830,7 +830,7 @@ Class Common_DB {
 	/**
 	 * Transaction Rollback
 	 */
-	static public function Rollback() {
+	public static function Rollback() {
 		$db = self::GetDB();
 	
 		$sqlResult = mysql_query( 'ROLLBACK' );
@@ -844,7 +844,7 @@ Class Common_DB {
 	 *
 	 * @return resource
 	 */
-	static public function End() {
+	public static function End() {
 		$db = self::GetDB();
 	
 		$sqlResult = mysql_query( 'END' );
@@ -858,7 +858,7 @@ Class Common_DB {
 	 * 
 	 * @param string $message
 	 */
-	static public function SaveLog( $message='' ) {
+	public static function SaveLog( $message='' ) {
 		self::$_log = '#' . date('Y-m-d H:i:s') . '#' . $message . "\n";
 	}
 
@@ -868,7 +868,7 @@ Class Common_DB {
 	 * 
 	 * @return string
 	 */
-	static public function GetLog() {
+	public static function GetLog() {
 		return self::$_log;
 
 	}

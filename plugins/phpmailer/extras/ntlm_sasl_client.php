@@ -18,7 +18,7 @@ define("SASL_NTLM_STATE_DONE",              3);
 
 class ntlm_sasl_client_class
 {
-	var $credentials=array();
+	var $credentials=[];
 	var $state=SASL_NTLM_STATE_START;
 
 	Function Initialize(&$client)
@@ -150,7 +150,7 @@ class ntlm_sasl_client_class
 			"realm"=>"",
 			"workstation"=>""
 		);
-		$defaults=array();
+		$defaults=[];
 		$status=$client->GetCredentials($this->credentials,$defaults,$interactions);
 		if($status==SASL_CONTINUE)
 			$this->state=SASL_NTLM_STATE_IDENTIFY_DOMAIN;

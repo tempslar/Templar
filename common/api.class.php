@@ -36,7 +36,7 @@ Class Common_Api {
 	
 	
 	
-	static public function GetInst( $params='' ) {
+	public static function GetInst( $params='' ) {
 		return new self( $params );
 	}
 	
@@ -117,7 +117,7 @@ Class Common_Api {
 	 * @param array $params
 	 * @return mixed string | null
 	 */
-	static public function GetRequestUrl( $url, $params ) {
+	public static function GetRequestUrl( $url, $params ) {
 		$getUrl = NULL;
 				
 		if ( $url ) {

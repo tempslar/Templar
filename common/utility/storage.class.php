@@ -7,7 +7,7 @@ Class Common_Utility_Storage {
 	 * @param array $params
 	 * @param array $filterLists
 	 */
-	static public function FilteParam( $params, $filterLists = array() ) {
+	public static function FilteParam( $params, $filterLists = [] ) {
 		
 		if ( $filterLists  &&  is_array( $filterLists ) ) {
 			

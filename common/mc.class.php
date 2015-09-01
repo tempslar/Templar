@@ -6,7 +6,7 @@ Class Common_MC {
 	 * 
 	 * @var object
 	 */
-	static protected $_mc = NULL;
+	protected static $_mc = NULL;
 	
 	
 	/**
@@ -14,7 +14,7 @@ Class Common_MC {
 	 * 
 	 * @var array
 	 */
-	static protected $_mcConfigs = array();
+	protected static $_mcConfigs = [];
 	
 	
 	/**
@@ -22,7 +22,7 @@ Class Common_MC {
 	 * 
 	 * @var string
 	 */
-	static protected $_keyPrefix = 'x_api_';
+	protected static $_keyPrefix = 'x_api_';
 	
 	
 	/**
@@ -30,7 +30,7 @@ Class Common_MC {
 	 * 
 	 * @var string
 	 */
-	static protected $_version   = 10;
+	protected static $_version   = 10;
 	
 	
 	/**
@@ -38,7 +38,7 @@ Class Common_MC {
 	 * 
 	 * @var int
 	 */
-	static protected $_cacheTime = 3600;
+	protected static $_cacheTime = 3600;
 	
 	
 	/**
@@ -46,7 +46,7 @@ Class Common_MC {
 	 * 
 	 * @var float
 	 */
-	static protected $_retryTime = 0.05;
+	protected static $_retryTime = 0.05;
 	
 	
 	/**
@@ -64,7 +64,7 @@ Class Common_MC {
 	/**
 	 * 获取单例
 	 */
-	static public function GetInst() {
+	public static function GetInst() {
 		
 		//未获取到mc，则推出
 		if ( TRUE != self::CheckMC() ) {
@@ -86,7 +86,7 @@ Class Common_MC {
 	/**
 	 * 获取mc配置
 	 */
-	static public function GetConf() {
+	public static function GetConf() {
 		
 		if ( isset( $GLOBALS['g_conf']['mc']['default']['0'] ) ) {
 			self::$_mcConfigs = $GLOBALS['g_conf']['mc']['default']['0'];
@@ -100,7 +100,7 @@ Class Common_MC {
 	 * 
 	 * @return boolean
 	 */
-	static public function CheckMC() {
+	public static function CheckMC() {
 		/*
 		if ( isset( $_REQUEST['refresh'] )  &&  1 == $_REQUEST['refresh']  ) {
 			return FALSE;
@@ -118,7 +118,7 @@ Class Common_MC {
 	/**
 	 * Memcache链接方法
 	 */
-	static public function Connect() {
+	public static function Connect() {
 		$mc = new Memcache;
 		
 		$mc->connect( self::$_mcConfigs['host'], self::$_mcConfigs['port'] );
@@ -141,7 +141,7 @@ Class Common_MC {
 	 * 
 	 * @param string $key
 	 */
-	static public function GetCacheKey( $key ) {
+	public static function GetCacheKey( $key ) {
 		$cacheKey = self::$_keyPrefix . self::$_version . '_' . $key;
 		
 		return $cacheKey;
@@ -152,7 +152,7 @@ Class Common_MC {
 	 * 设置缓存生存周期
 	 * @param int $time
 	 */
-	static public function SetCacheTime( $time ) {
+	public static function SetCacheTime( $time ) {
 	
 		if ( $time >= 0 ) {
 			self::$_cacheTime = $time;
@@ -171,7 +171,7 @@ Class Common_MC {
 	 * @param string $key
 	 * @param mixed $datas
 	 */
-	static public function SetCache( $key, $datas='' ) {
+	public static function SetCache( $key, $datas='' ) {
 		if ( $key ) {
 			$cacheKey = self::GetCacheKey( $key );
 			$mc       = self::GetInst();
@@ -201,7 +201,7 @@ Class Common_MC {
 	 * @param string $key
 	 * @return mixed|NULL
 	 */
-	static public function GetCache( $key ) {
+	public static function GetCache( $key ) {
 		if ( isset( $_REQUEST['refresh'] )  &&  1 == $_REQUEST['refresh']  ) {
 			return NULL;
 		}
@@ -245,7 +245,7 @@ Class Common_MC {
 	 * @param string $key
 	 * @return boolean
 	 */
-	static public function DelCache( $key ) {
+	public static function DelCache( $key ) {
 		if ( $key ) {
 			$cacheKey = self::GetCacheKey( $key );
 			$mc       = self::GetInst();

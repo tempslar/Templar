@@ -39,14 +39,14 @@ class phpmailerLangTest extends PHPUnit_Framework_TestCase
      * @private
      * @var string[]
      */
-    public $ChangeLog = array();
+    public $ChangeLog = [];
 
     /**
      * Holds the note log.
      * @private
      * @var string[]
      */
-    public $NoteLog = array();
+    public $NoteLog = [];
 
     /**
      * @var string Default include path
@@ -119,8 +119,8 @@ class phpmailerLangTest extends PHPUnit_Framework_TestCase
     {
         // Clean global variables
         $this->Mail = null;
-        $this->ChangeLog = array();
-        $this->NoteLog = array();
+        $this->ChangeLog = [];
+        $this->NoteLog = [];
     }
 
 
@@ -297,11 +297,11 @@ class phpmailerLangTest extends PHPUnit_Framework_TestCase
             if ($fileInfo->isDot()) {
                 continue;
             }
-            $matches = array();
+            $matches = [];
             //Only look at language files, ignore anything else in there
             if (preg_match('/^phpmailer\.lang-([a-z_]{2,})\.php$/', $fileInfo->getFilename(), $matches)) {
                 $lang = $matches[1]; //Extract language code
-                $PHPMAILER_LANG = array(); //Language strings get put in here
+                $PHPMAILER_LANG = []; //Language strings get put in here
                 include $fileInfo->getPathname(); //Get language strings
                 $missing = array_diff(array_keys($definedStrings), array_keys($PHPMAILER_LANG));
                 $extra = array_diff(array_keys($PHPMAILER_LANG), array_keys($definedStrings));

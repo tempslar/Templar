@@ -3,7 +3,7 @@ Class Common_Utility_Log {
 	
 	CONST WRITE_MODE = 'ab';
 	
-	static public $_FileName = NULL;
+	public static $_FileName = NULL;
 	
 	
 	/**
@@ -13,7 +13,7 @@ Class Common_Utility_Log {
 	 * 
 	 * @param object $model
 	 */
-	static public function RecordLog( $model ) {
+	public static function RecordLog( $model ) {
 		//var_dump( LOG_PATH, $model );exit;
 		
 		$file = self::GetLogFileFullName();
@@ -41,7 +41,7 @@ Class Common_Utility_Log {
 	 * 
 	 * @param string $log - 
 	 */
-	static public function MysqlLog( $log='' ) {
+	public static function MysqlLog( $log='' ) {
 		//判断是否需要记录SQL日志
 		if ( !defined( 'SQL_LOG_RECORD' )  ||  TRUE != SQL_LOG_RECORD ) {
 			return FALSE;
@@ -64,7 +64,7 @@ Class Common_Utility_Log {
 	 * @param array $datas - 日志数据
 	 * @return void
 	 */
-	static public function SpLog( $prefix, $datas ) {
+	public static function SpLog( $prefix, $datas ) {
 		$logData = '';
 		
 		//获取日志文件名
@@ -105,7 +105,7 @@ Class Common_Utility_Log {
 	 * @param string $prefix - 日志文件前缀
 	 * 
 	 */
-	static public function GetLogFileName( $prefix = '' ) {
+	public static function GetLogFileName( $prefix = '' ) {
 		
 		self::$_FileName = date( 'YmdH' ) . '.log';
 		
@@ -124,7 +124,7 @@ Class Common_Utility_Log {
 	 * 
 	 * @param stirng $prefix - 日志文件前缀
 	 */
-	static public function GetLogFileFullName( $prefix = '' ) {
+	public static function GetLogFileFullName( $prefix = '' ) {
 		self::GetLogFileName( $prefix );
 		
 		return LOG_PATH . self::$_FileName;
@@ -139,7 +139,7 @@ Class Common_Utility_Log {
 	 * @param object $model
 	 * @return string
 	 */
-	static public function GetLogDataStr( $model ) {
+	public static function GetLogDataStr( $model ) {
 		$logData = '';
 		
 		if ( is_object( $model ) ) {
@@ -148,7 +148,7 @@ Class Common_Utility_Log {
 			$datetime = Common_Tool::NowDate();
 			
 			if ( is_array( $tempLogDatas ) ) {
-				$logParts = array();
+				$logParts = [];
 				
 				foreach ( $tempLogDatas  AS  $key => $value ) {
 					$logParts[] = $key . LOG_SEPARATOR . $value;

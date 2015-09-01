@@ -5,11 +5,11 @@ Class Common_Config {
 	 *
 	 * @var array
 	 */
-	static public $_tokenKeys = array( 1, 4, 8, 13, 14, 17, 22, 26, 29, 31 );
+	public static $_tokenKeys = array( 1, 4, 8, 13, 14, 17, 22, 26, 29, 31 );
 	
-	static public $_defaultSqlOrder = 'DESC';
+	public static $_defaultSqlOrder = 'DESC';
 	
-	static public $_useCache = TRUE;
+	public static $_useCache = TRUE;
 	
 	
 	/**

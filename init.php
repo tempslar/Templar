@@ -6,15 +6,18 @@ define( 'DEFAULT_CLASS_METHOD', 'Run' );	//Default Application Class excute meth
 define( 'PROG_DIR', 'prog' );	//Default project root dir
 
 define( 'LOG_PATH', STORE_PATH . 'logs/api/' );
-define( 'WEB_INDEX', 'www.example.cn' );	//Web site Top domain
-define( 'RES_DOMAIN', 'http://res.example.cn' );	//Resource file domain
+define( 'WEB_INDEX', 'www.templar.com' );	//Web site Top domain
+define( 'RES_DOMAIN', 'http://res.templar.com' );	//Resource file domain
 
+define( 'DEBUG_KEY', 'debug' );	//debug mode switch param name
+define( 'DEBUG_VALUE', 'do' );	//turn on debug mode param value
+define( 'NO_CACHE_PARAM', 'refresh' );	//disable cache param name
 
 define( 'USE_FIREPHP', TRUE );	//firebug On/Off
 
-define( 'REQUEST_SEPARATER', '_' );	//REQUEST parameter seperater
+define( 'REQUEST_SEPARATOR', '_' );	//REQUEST parameter separator
 
-define( 'APP_ROOT_NAME', 'app' );	//执行类存放主路径
+define( 'APP_ROOT_NAME', 'app' );	//application classes storage directory
 
 if ( '127.0.0.1' == $_SERVER['SERVER_ADDR'] ) {
 	define( 'DEBUG_MODE', TRUE );
@@ -88,7 +91,6 @@ Common_Tool::DebugModeOff();	// Debug Mode On/Off, On:Common_Tool::DebugModeOn()
  * @return void
  */
 function templar_autoload( $className ) {
-	
 
 	if ( $className ) {
 		//convert class name into lower-letter for all file name is lower-letter

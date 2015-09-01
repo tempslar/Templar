@@ -8,7 +8,7 @@ Class Common_Utility_Pagebar {
 	 * 
 	 * @param string $apiName
 	 */
-	static public function NeedPagebar( $apiName ) {
+	public static function NeedPagebar( $apiName ) {
 		
 		if ( $apiName  &&  false !== strpos( $apiName, Common_Config::PAGE_BAR_MARK ) ) {
 			

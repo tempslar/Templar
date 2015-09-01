@@ -35,14 +35,14 @@
 
 
   // storing all status output from the script to be shown to the user later
-  $results_messages = array();
-  $errorMsg = array();
+  $results_messages = [];
+  $errorMsg = [];
 
   // $example_code represents the "final code" that we're using, and will 
   // be shown to the user at the end.
   $example_code  = "\nrequire_once(\"../class.phpmailer.php\");";
   $example_code .= "\nrequire_once(\"../extras/class.html2text.php\");";
-  $example_code .= "\n\n\$results_messages = new array();";
+  $example_code .= "\n\n\$results_messages = new [];";
 
   class phpmailerAppException extends Exception {
     public function errorMessage() {

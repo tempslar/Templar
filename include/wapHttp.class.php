@@ -18,7 +18,7 @@ class WapHttp
 	var $scheme = 'http';
 	var $host = '';
 	var $port = '80';
-	var $auth = array();
+	var $auth = [];
 	var $error = '';
 	var $httphead = '';
 	var $html = '';
@@ -27,7 +27,7 @@ class WapHttp
 	var $jumpCount = 0;
 	var $maxRetry = 1;
 	var $maxJumpCount = 1;
-	var $postdata = array();
+	var $postdata = [];
 	var $request_start_time;
 	var $request_end_time;
 
@@ -109,9 +109,9 @@ class WapHttp
 		$this->scheme	= "http";
 		$this->host		= "";
 		$this->port		= "80";
-		$this->auth		= array();
-		$this->puthead  = array() ;
-		$this->httphead = array() ;
+		$this->auth		= [];
+		$this->puthead  = [] ;
+		$this->httphead = [] ;
 		$this->html		= '';
 		$this->reTry	= 0;
 		$this->close();
