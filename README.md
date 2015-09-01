@@ -167,4 +167,9 @@ Lift Off
 Depoly the Templar source code into your web service directories (etc, /www/htdocs/demo).
 
 
-Create your project in prog directory like demo (/www/htdocs/demo/prog/demo)
+Create your project in prog directory like demo (/www/htdocs/demo/prog/demo), and create index.php in it.
+
+Setup web server, set domain root to your project directory (/www/htdocs/demo/prog/demo).
+
+
+
