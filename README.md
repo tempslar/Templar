@@ -7,6 +7,8 @@ Table of contents
 =======
 [Features](#featrues)
 
+[Requirements](#requirements)
+
 [File Structure](#file-structure)
 
 [Layers](#layers)
@@ -35,6 +37,14 @@ More than MVC!
 Templar Framework provides 7 Layers to achieve low coupling and help developer spread their code into different layers.
 
 
+Requirements
+======
+PHP: 5.6
+Web Server: Apache or Nginx
+PHP extension:
+MySQLi
+Memcached
+Redis
 
 
 File Structure
@@ -48,7 +58,8 @@ Templar
 	
 	|-plugins  - Proxy classes and third-party libraries
 	
-	|-resource - resource files like bootstrap and jquery which you want to be accessed by all applications
+	|-resource - resource files like bootstrap and jquery 
+					which you want to be accessed by all applications
 	
 	|-prog     - Application Directories (working directories)
 	
