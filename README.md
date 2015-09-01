@@ -40,10 +40,15 @@ Templar Framework provides 7 Layers to achieve low coupling and help developer s
 Requirements
 ======
 PHP: 5.6
+
 Web Server: Apache or Nginx
+
 PHP extension:
+
 MySQLi
+
 Memcached
+
 Redis
 
 
