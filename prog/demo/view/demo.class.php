@@ -36,7 +36,12 @@ Class Prog_Demo_View_Demo extends Common_View {
 		$params = $this->_params;
 		
 		//add constant
+		$configName           = 'Prog' . CLASS_SEPARATOR . SYS_ENTRANCE
+									. CLASS_SEPARATOR . 'Config'
+									. CLASS_SEPARATOR . 'Demo';
+		$params['index_act']  = $configName::DEF_INDEX_ACT;
 		$params['res_domain'] = RES_DOMAIN;
+		
 
 		//给模板参数赋值
 		$this->assignToTpl( $params );

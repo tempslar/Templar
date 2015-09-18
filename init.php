@@ -1,24 +1,38 @@
 <?php
-define( 'PROJECT_NAME', 'Templar' );
-define( 'STORE_PATH', '/mnt/data0/' );
-define( 'ROOT_PATH',  dirname( __FILE__ ) . '/' );
-define( 'DEFAULT_CLASS_METHOD', 'Run' );	//Default Application Class excute method name
+define( 'ROOT_PATH',  dirname( __FILE__ ) . '/' );	//Templar Framework file root path
+define( 'STORE_PATH', '/mnt/data0/' );	//Default path to store log or other files
 define( 'PROG_DIR', 'prog' );	//Default project root dir
 
-define( 'LOG_PATH', STORE_PATH . 'logs/api/' );
-define( 'WEB_INDEX', 'www.templar.com' );	//Web site Top domain
-define( 'RES_DOMAIN', 'http://res.templar.com' );	//Resource file domain
+define( 'APP_ROOT_NAME', 'app' );	//Application classes storage directory
+define( 'DEFAULT_CLASS_METHOD', 'Run' );	//Default Application Class excute method name
 
-define( 'DEBUG_KEY', 'debug' );	//debug mode switch param name
-define( 'DEBUG_VALUE', 'do' );	//turn on debug mode param value
-define( 'NO_CACHE_PARAM', 'refresh' );	//disable cache param name
+define( 'WRITE_MODE', 'ab' );	//file write mode
+define( 'SQL_LOG_RECORD', FALSE ); //whether auto record MySQL log
 
-define( 'USE_FIREPHP', TRUE );	//firebug On/Off
-
+define( 'DEFAULT_SEPARATOR', '_' );	//Framework default separator
+define( 'CLASS_SEPARATOR', '_' );	//Framework class name separator
 define( 'REQUEST_SEPARATOR', '_' );	//REQUEST parameter separator
+define( 'LOG_SEPARATOR', '`' );	//Default separator for log data
+define( 'SQL_LOG_SEPARATOR', '#' );	//Default SQL log data separator
+define( 'MC_KEY_SEPARATOR', '_' );	//Default cache key separator
+define( 'PARAMDEFAULT_SEPARATOR', ',' );	//Default HTTP parameter separator
 
-define( 'APP_ROOT_NAME', 'app' );	//application classes storage directory
+define( 'DEF_SQL_LIMIT', 50 );	//Default SQL limit value
+define( 'MAX_SQL_LIMIT', 500 );	//Default maximum SQL limit value
 
+define( 'NO_CACHE_PARAM', 'refresh' );	//Disable cache param name
+define( 'DEBUG_KEY', 'db' );	//Debug mode switch param name
+define( 'DEBUG_VALUE', '1' );	//Turn on debug mode param value
+
+define( 'USE_FIREPHP', TRUE );	//Firebug On/Off
+
+//Global script begin timestamp
+$g_vars['starttime'] = microtime( TRUE );
+
+//memcache config
+$g_conf['mc']['default'][ 0 ] = array( 'host' => '127.0.0.1', 'port' => 11211 );
+
+//If it is in your own computer, debug mode will be enable
 if ( '127.0.0.1' == $_SERVER['SERVER_ADDR'] ) {
 	define( 'DEBUG_MODE', TRUE );
 }
@@ -31,47 +45,6 @@ if ( false !== strpos( $_SERVER['SERVER_ADDR'], '172.16.' )
 else {
 	define( 'TEST_SERVER', FALSE );
 }
-
-define( 'WRITE_MODE', 'ab' );	//文件写入类型
-define( 'SQL_LOG_RECORD', FALSE ); //是否记录MYSQL日志
-
-define( 'DEFAULT_SEPARATOR', '_' );	//框架默认分隔符
-define( 'LOG_SEPARATOR', '`' );	//日志数据分割符
-define( 'SQL_LOG_SEPARATOR', '#' ); //SQL日志数据分割符
-define( 'MC_KEY_SEPARATOR', '_' );	//MC key分割符
-define( 'PARAMDEFAULT_SEPARATOR', ',' );	//HTTP参数默认分隔符
-
-define( 'DEF_SQL_LIMIT', 50 );	//默认最大查询条数
-define( 'MAX_SQL_LIMIT', 500 );	//大查询某认最大查询条数
-
-define( 'DB_PRIMARY', 'templar' );	//默认链接的数据库名
-
-//Global script begin timestamp
-$g_vars['starttime'] = microtime( TRUE );
-
-//default master DB config
-$g_conf['db']['default']['master'] = array(
-												'host'  => 'localhost'
-												,'port' => '3306'
-												,'user' => 'templar_rw'
-												,'pwd'  => ''
-												,'db'   => ''
-											);
-
-//default slave DB config
-$g_conf['db']['default']['slave'] = array(
-												'host'  => 'localhost'
-												,'port' => '3306'
-												,'user' => 'templar_r'
-												,'pwd'  => ''
-												,'db'   => ''
-										);
-
-$g_conf['db']['api']   = $g_conf['db']['default'];
-
-//memcache config
-$g_conf['mc']['default'][ 0 ] = array( 'host' => '127.0.0.1', 'port' => 11211 );
-
 
 /***** Common Function *****/
 

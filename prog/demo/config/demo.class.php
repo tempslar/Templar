@@ -15,6 +15,14 @@ Class Prog_Demo_Config_Demo {
 
 
 	/**
+	 * act param value for index
+	 *
+	 * @var string
+	 */
+	const DEF_INDEX_ACT = 'index_index';
+	
+	
+	/**
 	 * everyone can access api names
 	 */
 	public static $_everyoneApis = array(

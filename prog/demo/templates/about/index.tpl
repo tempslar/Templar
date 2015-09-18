@@ -106,9 +106,9 @@ body {
 		<div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right">
-            <li role="presentation"><a href="https://github.com/tempslar/Templar">Home</a></li>
+            <li role="presentation"><a href="./?act=<{$index_act}>">Home</a></li>
             <li role="presentation" class="active"><a href="#">About</a></li>
-            <li role="presentation"><a href="#">Contact</a></li>
+            <li role="presentation"><a href="https://github.com/tempslar/Templar">Contact</a></li>
           </ul>
         </nav>
         <h3 class="text-muted">Templar</h3>
