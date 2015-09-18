@@ -169,16 +169,16 @@ Create a proxy class to use a third-party library as a plugin.
 
 Lift Off
 ======
-Depoly the Templar source code into your web service directories (etc, /www/htdocs/demo).
+Depoly the Templar source code into your web service directories (etc, /www/htdocs/templar).
 
 
-Create your project in 'prog' directory like 'demo' (etc, /www/htdocs/demo/prog/demo), and create index.php in it.
+Create your project in 'prog' directory like 'demo' (etc, /www/htdocs/templar/prog/demo), and create index.php in it.
 
-Setup web server, set domain (etc, www.templar.com) root to your project directory (/www/htdocs/demo/prog/demo).
+Setup web server, set domain (etc, www.templar.com) root to your project directory (/www/htdocs/templar/prog/demo).
 
-Setup init.php (etc, /www/htdocs/demo/init.php and /www/htdocs/demo/prog/demo/init.php) which should contain the settings for all projects and special settings for 'demo'.
+Setup init.php (etc, /www/htdocs/templar/init.php and /www/htdocs/templar/prog/demo/init.php) which should contain the settings for all projects and special settings for 'demo'.
 
-If you want to define any constant for 'demo' project, please extends Common/Config Class to project/config and put the settings in it (etc, /www/htdocs/demo/prog/demo/config/config.class.php)
+If you want to define any constant for 'demo' project, please extends Common/Config Class to project/config and put the settings in it (etc, /www/htdocs/templar/prog/demo/config/config.class.php)
 
 Now you can visit 'demo' using http://www.templar.com/?act=index_index. - New Router Module will come later.
 
