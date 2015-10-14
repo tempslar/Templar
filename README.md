@@ -180,7 +180,7 @@ Setup init.php (etc, /www/htdocs/templar/init.php and /www/htdocs/templar/prog/d
 
 If you want to define any constant for 'demo' project, please extends Common/Config Class to project/config and put the settings in it (etc, /www/htdocs/templar/prog/demo/config/config.class.php)
 
-Now you can visit 'demo' using http://www.templar.com/?act=index_index. - New Router Module will come later.
+Now you can visit 'demo' using http://www.templar.com/?act=index_index. - New Router Module will come soon.
 
 
 
