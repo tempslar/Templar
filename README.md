@@ -34,7 +34,7 @@ Featrues
 ======
 More than MVC!
 
-Templar Framework provides 7 Layers to achieve low coupling and help developer spread their code into different layers.
+Templar Framework provides 7 Layers to achieve loss coupling and help developers spread their code into different layers.
 
 
 Requirements
@@ -174,13 +174,13 @@ Depoly the Templar source code into your web service directories (etc, /www/htdo
 
 Create your project in 'prog' directory like 'demo' (etc, /www/htdocs/templar/prog/demo), and create index.php in it.
 
-Setup web server, set domain (etc, www.templar.com) root to your project directory (/www/htdocs/templar/prog/demo).
+Setup web server, set domain (etc, www.example.com) root to your project directory (/www/htdocs/templar/prog/demo).
 
 Setup init.php (etc, /www/htdocs/templar/init.php and /www/htdocs/templar/prog/demo/init.php) which should contain the settings for all projects and special settings for 'demo'.
 
 If you want to define any constant for 'demo' project, please extends Common/Config Class to project/config and put the settings in it (etc, /www/htdocs/templar/prog/demo/config/config.class.php)
 
-Now you can visit 'demo' using http://www.templar.com/?act=index_index. - New Router Module will come soon.
+Now you can visit 'demo' using http://www.example.com/?act=index_index. - New Router Module will come soon.
 
 
 
